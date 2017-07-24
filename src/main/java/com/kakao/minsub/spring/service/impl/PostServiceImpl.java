@@ -66,6 +66,6 @@ public class PostServiceImpl implements PostService {
     @Override
     @CacheEvict(value = "findPost", key="#p0")
     public void refreshCache(int id) {
-        System.out.println(id + " cache clear!");
+
     }
 }

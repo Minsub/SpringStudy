@@ -4,6 +4,8 @@ package com.kakao.minsub.spring.controller;
 import com.kakao.minsub.spring.model.Post;
 import com.kakao.minsub.spring.service.PostService;
 import com.kakao.minsub.spring.util.TimeControll;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.domain.Page;
@@ -21,6 +23,8 @@ import java.util.Collection;
 @Produces(MediaType.APPLICATION_JSON)
 public class PostController {
 
+    private final Logger logger = LoggerFactory.getLogger(PostController.class);
+
     @Autowired
     private PostService postService;
 
@@ -29,7 +33,7 @@ public class PostController {
     public Post show(@PathParam("id") final int id) {
         TimeControll.startCheckPoint("postNoCache");
         Post post = postService.findOne(id);
-        System.out.println(TimeControll.endCheckPoint("postNoCache"));
+        logger.info(TimeControll.endCheckPoint("postNoCache"));
         return post;
     }
 
@@ -38,13 +42,14 @@ public class PostController {
     public Post showWithCache(@PathParam("id") final int id) {
         TimeControll.startCheckPoint("postCache");
         Post post = postService.findOneCache(id);
-        System.out.println(TimeControll.endCheckPoint("postCache"));
+        logger.info(TimeControll.endCheckPoint("postCache"));
         return post;
     }
 
     @GET
     @Path("/refresh/{id}")
     public void refreshCache(@PathParam("id") final int id) {
+        logger.info(id + " cache clear!!");
         postService.refreshCache(id);
     }
 
