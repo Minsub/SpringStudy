@@ -2,7 +2,9 @@ package com.kakao.minsub.spring.controller;
 
 
 import com.kakao.minsub.spring.model.Post;
+import com.kakao.minsub.spring.model.User;
 import com.kakao.minsub.spring.service.PostService;
+import com.kakao.minsub.spring.service.UserService;
 import com.kakao.minsub.spring.util.TimeControll;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +29,9 @@ public class PostController {
 
     @Autowired
     private PostService postService;
+
+    @Autowired
+    private UserService userService;
 
     @GET
     @Path("/{id}")
@@ -82,4 +87,12 @@ public class PostController {
     public Page<Post> showPageable(@PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC, size=2) Pageable page) {
         return postService.findAll(page);
     }
+
+
+    @GET
+    @Path("/test")
+    public User test() {
+        return userService.findOne("admin");
+    }
+
 }

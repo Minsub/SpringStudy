@@ -19,8 +19,6 @@ public class ProfileController {
     @GET
     @Path("/{id}")
     public Profile show(@PathParam("id") final int id) {
-        System.out.println("/test/");
-
         return profileService.findOne(id);
     }
 

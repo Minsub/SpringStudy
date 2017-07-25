@@ -10,6 +10,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 
 import java.util.Collection;
@@ -18,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by kakao on 2017. 7. 24..
  */
-@Component
+@Service
 public class PostServiceImpl implements PostService {
 
     @Autowired

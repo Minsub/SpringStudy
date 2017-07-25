@@ -1,21 +1,20 @@
 package com.kakao.minsub.spring.service.impl;
 
 import com.kakao.minsub.spring.config.validator.FullValidation;
-import com.kakao.minsub.spring.controller.PostController;
 import com.kakao.minsub.spring.model.Profile;
 import com.kakao.minsub.spring.repository.ProfileRepository;
 import com.kakao.minsub.spring.service.ProfileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 import java.util.Set;
 
-@Component
+@Service
 public class ProfileServiceImpl implements ProfileService {
     private final Logger logger = LoggerFactory.getLogger(ProfileServiceImpl.class);
 

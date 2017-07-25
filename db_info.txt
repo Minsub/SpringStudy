@@ -1,0 +1,44 @@
+/* PROFILE */
+CREATE TABLE `profiles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `search_id` varchar(40) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ux_searchid` (`search_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=56141 DEFAULT CHARSET=utf8mb4;
+
+
+
+/* POST */
+CREATE TABLE `posts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `profile_id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `is_show` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `FKpsftfs7gvqj01ktpk1njeet96` (`profile_id`),
+  CONSTRAINT `FKpsftfs7gvqj01ktpk1njeet96` FOREIGN KEY (`profile_id`) REFERENCES `profiles` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3407 DEFAULT CHARSET=utf8mb4;
+
+
+/* USERS */
+CREATE TABLE `users` (
+  `username` varchar(20) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `expired_flag` tinyint(1) NOT NULL DEFAULT 0,
+  `locked_flag` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+/* AUTHORITY */
+CREATE TABLE `authority` (
+  `username` varchar(20) NOT NULL,
+  `authority_name` varchar(20) NOT NULL,
+  PRIMARY KEY (username,authority_name)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+insert into users values('admin','admin','admin user', false,false);
+insert into authority values('admin','ADMIN');
