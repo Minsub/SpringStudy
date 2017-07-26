@@ -36,6 +36,7 @@ public class Profile implements Serializable {
     private String searchId;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name="profileId", insertable = false)
+    @JoinColumn(name="profileId", insertable = false,
+            foreignKey = @ForeignKey(name="none",value = ConstraintMode.NO_CONSTRAINT))
     private Collection<Post> posts;
 }

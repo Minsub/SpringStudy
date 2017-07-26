@@ -27,7 +27,8 @@ public class User implements UserDetails, Serializable {
     public boolean locked_flag;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name="username", insertable = false)
+    @JoinColumn(name="username", insertable = false,
+            foreignKey = @ForeignKey(name="none",value = ConstraintMode.NO_CONSTRAINT))
     public Collection<Authority> authorities;
 
 
