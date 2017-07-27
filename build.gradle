@@ -24,8 +24,10 @@ repositories {
 dependencies {
 	compile 'org.springframework.boot:spring-boot-starter-jersey'
 	compile('org.springframework.boot:spring-boot-starter-freemarker')
+	compile('org.springframework.boot:spring-boot-devtools')
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-jdbc')
+	compile 'org.glassfish.jersey.ext:jersey-mvc-freemarker:2.24'
 	compile 'mysql:mysql-connector-java:5.1.38'
 	compile 'io.swagger:swagger-jersey2-jaxrs:1.5.10'
 	compile 'org.hibernate:hibernate-validator:5.2.4.Final'
