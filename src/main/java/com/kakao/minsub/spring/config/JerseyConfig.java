@@ -6,6 +6,7 @@ import com.kakao.minsub.spring.controller.PostController;
 import com.kakao.minsub.spring.controller.ProfileController;
 import com.kakao.minsub.spring.controller.UserController;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.glassfish.jersey.server.mvc.freemarker.FreemarkerMvcFeature;
 import org.springframework.stereotype.Component;
 
@@ -19,5 +20,6 @@ public class JerseyConfig  extends ResourceConfig {
         register(HomeController.class);
         register(ConstraintValidationExceptionMapper.class);
         register(FreemarkerMvcFeature.class);
+        register(RolesAllowedDynamicFeature.class);
     }
 }

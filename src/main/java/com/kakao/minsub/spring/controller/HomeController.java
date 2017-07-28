@@ -3,6 +3,7 @@ package com.kakao.minsub.spring.controller;
 
 import org.glassfish.jersey.server.mvc.Viewable;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -21,4 +22,20 @@ public class HomeController {
     public Viewable index() {
         return new Viewable("/templates/index.ftl");
     }
+
+    @GET
+    @Path("/admin")
+    @RolesAllowed({"ROLE_ADMIN"})
+    public String adminOnly() {
+        return "Admin Only Page";
+    }
+
+
+    @GET
+    @Path("/normal")
+    @RolesAllowed({"ROLE_NORMAL"})
+    public String normalOnly() {
+        return "Normal Only Page";
+    }
+
 }
