@@ -6,16 +6,20 @@ import com.kakao.minsub.spring.model.User;
 import com.kakao.minsub.spring.service.PostService;
 import com.kakao.minsub.spring.service.UserService;
 import com.kakao.minsub.spring.util.TimeControll;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.util.Collection;
 
@@ -39,15 +43,6 @@ public class PostController {
         TimeControll.startCheckPoint("postNoCache");
         Post post = postService.findOne(id);
         logger.info(TimeControll.endCheckPoint("postNoCache"));
-        return post;
-    }
-
-    @GET
-    @Path("/cache/{id}")
-    public Post showWithCache(@PathParam("id") final int id) {
-        TimeControll.startCheckPoint("postCache");
-        Post post = postService.findOneCache(id);
-        logger.info(TimeControll.endCheckPoint("postCache"));
         return post;
     }
 
@@ -84,10 +79,11 @@ public class PostController {
 
     @GET
     @Path("/all")
-    public Page<Post> showPageable(@PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC, size=2) Pageable page) {
-        return postService.findAll(page);
+    public Page<Post> showPageable(@QueryParam("size") @DefaultValue("3") int size,
+                                   @QueryParam("page") @DefaultValue("1") int page) {
+        final Pageable pageable = new PageRequest(page , size, new Sort(Sort.Direction.DESC, "id"));
+        return postService.findAll(pageable);
     }
-
 
     @GET
     @Path("/test")

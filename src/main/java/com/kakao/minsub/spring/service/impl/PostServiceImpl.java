@@ -27,17 +27,9 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post findOne(int id) {
-        TimeControll.sleep(1);
         return postRepository.findOne(id);
     }
-
-    @Override
-    @Cacheable(value = "findPost", key="#p0")
-    public Post findOneCache(int id) {
-        TimeControll.sleep(1);
-        return postRepository.findOne(id);
-    }
-
+    
     @Override
     public Post findOneByProfileId(int profileId) {
         return postRepository.findOneByProfileId(profileId);
@@ -62,11 +54,9 @@ public class PostServiceImpl implements PostService {
     public Page<Post> findAll(Pageable pageable) {
         return postRepository.findAll(pageable);
     }
-
-
+    
     @Override
-    @CacheEvict(value = "findPost", key="#p0")
     public void refreshCache(int id) {
-
+        postRepository.evictCache(id);
     }
 }

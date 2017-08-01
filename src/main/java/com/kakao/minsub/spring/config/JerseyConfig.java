@@ -14,12 +14,12 @@ import org.springframework.stereotype.Component;
 public class JerseyConfig  extends ResourceConfig {
 
     public JerseyConfig() {
-        register(ProfileController.class);
-        register(PostController.class);
-        register(UserController.class);
-        register(HomeController.class);
+        packages("com.kakao.minsub.spring.controller");
+
         register(ConstraintValidationExceptionMapper.class);
         register(FreemarkerMvcFeature.class);
         register(RolesAllowedDynamicFeature.class);
+        
+        
     }
 }

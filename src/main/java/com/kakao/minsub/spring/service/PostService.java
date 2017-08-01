@@ -11,20 +11,18 @@ import java.util.Collection;
  */
 public interface PostService {
 
-    public Post findOne(int id);
+    Post findOne(int id);
 
-    public Post findOneByProfileId(int profileId);
+    Post findOneByProfileId(int profileId);
 
-    public Post save(Post post);
+    Post save(Post post);
 
-    public void delete(Integer id);
+    void delete(Integer id);
 
-    public Collection<Post> findAvailablePosts();
+    Collection<Post> findAvailablePosts();
 
-    public Page<Post> findAll(Pageable pageable);
-
-    public Post findOneCache(int id);
-
-    public void refreshCache(int id);
+    Page<Post> findAll(Pageable pageable);
+    
+    void refreshCache(int id);
 
 }
