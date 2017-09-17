@@ -41,8 +41,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();
-
-
     }
 
     @Override
@@ -65,6 +63,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .antMatchers("/static/**")
                 .antMatchers("/resources/**")
-                .antMatchers("/api/**");
+                .antMatchers("/swagger-ui/**").anyRequest();
     }
 }
