@@ -1,10 +1,14 @@
 package com.kakao.minsub.spring.rest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Map;
 
 //@RunWith(SpringRunner.class)
 //@SpringBootTest
@@ -26,7 +30,8 @@ public class RestTemplateTest {
             String url = "http://rocket-api.devel.kakao.com/talk/profiles/56229/contact";
             ResponseEntity<String> result = restTemplate.getForEntity(url, String.class);
     
-    
+            ObjectReader reader = new ObjectMapper().readerFor(Map.class);
+            Map<String, Object> map = reader.readValue(result.getBody());
             System.err.println(result.getStatusCode());
     
             System.err.println(result.getBody());

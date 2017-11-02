@@ -1,8 +1,10 @@
 package com.kakao.minsub.spring;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Test;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,20 +15,16 @@ public class JustTest {
     
     @Test
     public void test() {
-        System.out.println("Test-1");
         
-        String a = "TestString";
-        a = null;
-        
-        System.out.println(Optional.ofNullable(a).orElse("empty"));
-        
-        
-        
-        
-        List<String> list = null;
-        
-        List<String> list2 = Optional.ofNullable(list).orElseGet(Lists::newArrayList);
+        Date c1 = new Date();
+        Date c2 = DateUtils.addDays(c1, -15);
+        System.out.println("c1: " + c1);
+        System.out.println("c2: " + c2);
+        System.out.println(c1.compareTo(c2) > 0 ? c1 : c2);
     
-        System.out.println(list2.size());
+        System.out.println(c2.before(DateUtils.addDays(new Date(), -14)));
+    
+        
+                
     }
 }
