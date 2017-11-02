@@ -24,6 +24,12 @@ public class HomeController {
     }
 
     @GET
+    @Path("/api")
+    public Viewable api() {
+        return new Viewable("/templates/api.ftl");
+    }
+
+    @GET
     @Path("/admin")
     @RolesAllowed({"ROLE_ADMIN"})
     public String adminOnly() {
