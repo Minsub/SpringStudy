@@ -27,24 +27,24 @@ public class JerseyConfig  extends ResourceConfig {
     
         register(ConstraintValidationExceptionMapper.class);
         register(FreemarkerMvcFeature.class);
-        register(RolesAllowedDynamicFeature.class);
-        register(WadlResource.class);
+//        register(RolesAllowedDynamicFeature.class);
+//        register(WadlResource.class);
     }
     
     private void configureSwagger() {
         register(ApiListingResource.class);
 //        register(SwaggerSerializers.class);
 
-        BeanConfig beanConfig = new BeanConfig();
-        beanConfig.setConfigId("springStudy-swagger-example");
-        beanConfig.setTitle("springStudy-swagger");
-        beanConfig.setVersion("1.0.2");
-        beanConfig.setSchemes(new String[]{"http","https"});
-        beanConfig.setHost("localhost:8888");
+//        BeanConfig beanConfig = new BeanConfig();
+//        beanConfig.setConfigId("springStudy-swagger-example");
+//        beanConfig.setTitle("springStudy-swagger");
+//        beanConfig.setVersion("1.0.2");
+//        beanConfig.setSchemes(new String[]{"http","https"});
+//        beanConfig.setHost("localhost:8888");
 //        beanConfig.setBasePath("/api");
-        beanConfig.setResourcePackage("com.kakao.minsub.spring.controller");
-        beanConfig.setPrettyPrint(true);
-        beanConfig.setScan(true);
+//        beanConfig.setResourcePackage("com.kakao.minsub.spring.controller");
+//        beanConfig.setPrettyPrint(true);
+//        beanConfig.setScan(true);
     }
     
 }
