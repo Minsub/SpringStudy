@@ -1,28 +1,21 @@
 package com.kakao.minsub.spring.controller;
 
 
-import com.kakao.minsub.spring.model.Post;
-import com.kakao.minsub.spring.model.User;
-import com.kakao.minsub.spring.service.PostService;
-import com.kakao.minsub.spring.service.UserService;
-import com.kakao.minsub.spring.util.TimeControll;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.net.URLEncoder;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Map;
 
 
