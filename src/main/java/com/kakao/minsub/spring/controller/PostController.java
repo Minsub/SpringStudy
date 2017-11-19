@@ -4,6 +4,8 @@ package com.kakao.minsub.spring.controller;
 import com.kakao.minsub.spring.model.Post;
 import com.kakao.minsub.spring.service.PostService;
 import com.kakao.minsub.spring.util.TimeControll;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import java.util.Collection;
 
 
 @EnableCaching
+@Api("Post")
 @Path("/post")
 @Produces(MediaType.APPLICATION_JSON)
 public class PostController {
@@ -71,6 +74,7 @@ public class PostController {
         return postService.findAvailablePosts();
     }
 
+    @ApiOperation("Post all")
     @GET
     @Path("/all")
     public Page<Post> showPageable(@QueryParam("size") @DefaultValue("3") int size,
