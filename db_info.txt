@@ -42,3 +42,6 @@ CREATE TABLE `authority` (
 
 insert into users values('admin','admin','admin user', false,false);
 insert into authority values('admin','ADMIN');
+
+
+-- add
