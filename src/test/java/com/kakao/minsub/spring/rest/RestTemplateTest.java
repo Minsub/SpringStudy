@@ -24,7 +24,7 @@ public class RestTemplateTest {
         
     }
     
-    @Test
+//    @Test
     public void test() {
         try {
             String url = "http://rocket-api.devel.kakao.com/talk/profiles/56229/contact";
