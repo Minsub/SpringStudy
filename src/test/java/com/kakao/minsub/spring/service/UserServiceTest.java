@@ -30,20 +30,20 @@ public class UserServiceTest {
     private AuthorityRepository authorityRepository;
 
 
-    @Test
+//    @Test
     public void user() {
         User user = userService.findOne("admin");
         System.out.println(user);
     }
 
-    @Test
+//    @Test
     public void authority() {
         Collection<Authority> list = authorityRepository.findAllByUsername("admin");
         list.forEach(a -> System.out.println(a.authorityId .username+ ": " + a.authorityId.authorityName));
 
     }
 
-    @Test
+//    @Test
     public void post() {
         Collection<Post> posts = postService.findAvailablePosts();
         for (Post post : posts) {
