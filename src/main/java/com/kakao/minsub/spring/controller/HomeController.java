@@ -37,7 +37,7 @@ public class HomeController {
 
     @GET
     @Path("/test2")
-    public Viewable test() {
+    public Viewable test2() {
         return new Viewable("/templates/api.ftl");
     }
 
