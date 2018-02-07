@@ -30,6 +30,18 @@ public class HomeController {
     }
 
     @GET
+    @Path("/test")
+    public Viewable test() {
+        return new Viewable("/templates/api.ftl");
+    }
+
+    @GET
+    @Path("/test/view")
+    public Viewable test_dept2() {
+        return new Viewable("/templates/api.ftl");
+    }
+
+    @GET
     @Path("/admin")
     @RolesAllowed({"ROLE_ADMIN"})
     public String adminOnly() {
