@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 
 @Configuration
-@PropertySource("classpath:db.properties")
+@PropertySource("classpath:db-${spring.profiles.active}.properties")
 @EnableJpaRepositories(
         basePackages = { "com.kakao.minsub.spring.repository"},
         entityManagerFactoryRef = "localMysqlFactoryBean",

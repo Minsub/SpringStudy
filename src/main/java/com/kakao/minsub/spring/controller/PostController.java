@@ -86,6 +86,14 @@ public class PostController {
     }
 
     @GET
+    @Path("/")
+    public Page<Post> showa(@QueryParam("size") @DefaultValue("3") int size,
+                                   @QueryParam("page") @DefaultValue("1") int page) {
+        final Pageable pageable = new PageRequest(page , size, new Sort(Sort.Direction.DESC, "id"));
+        return postService.findAll(pageable);
+    }
+
+    @GET
     @Path("/test")
     public User test() {
         return userService.findOne("admin");
