@@ -50,7 +50,7 @@ dependencies {
 
 //	compile('javax.servlet:servlet-api')
 //	provided group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
-	providedRuntime('javax.servlet:javax.servlet-api')
+//	providedRuntime('javax.servlet:javax.servlet-api')
 
 	runtime('mysql:mysql-connector-java')
 	compileOnly('org.projectlombok:lombok')

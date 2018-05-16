@@ -5,6 +5,8 @@ import com.kakao.minsub.spring.config.validator.group.Second;
 import com.kakao.minsub.spring.config.validator.group.Third;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -35,8 +37,13 @@ public class Profile implements Serializable {
 
     private String searchId;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="profileId", insertable = false,
             foreignKey = @ForeignKey(name="none",value = ConstraintMode.NO_CONSTRAINT))
     private Collection<Post> posts;
+    
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+    }
 }

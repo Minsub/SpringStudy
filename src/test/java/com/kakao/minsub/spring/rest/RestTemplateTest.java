@@ -25,21 +25,21 @@ public class RestTemplateTest {
     }
     
 //    @Test
-    public void test() {
-        try {
-            String url = "http://rocket-api.devel.kakao.com/talk/profiles/56229/contact";
-            ResponseEntity<String> result = restTemplate.getForEntity(url, String.class);
-    
-            ObjectReader reader = new ObjectMapper().readerFor(Map.class);
-            Map<String, Object> map = reader.readValue(result.getBody());
-            System.err.println(result.getStatusCode());
-    
-            System.err.println(result.getBody());
-        } catch (HttpClientErrorException hce) {
-            System.err.println(hce.getStatusCode() + ": " + hce.getStatusText());
-        } catch (Exception e) {
-            System.err.println("Exception: " + e.getMessage());
-        }
+    public void test33() {
+//        try {
+//            String url = "http://rocket-api.devel.kakao.com/talk/profiles/56229/contact";
+//            ResponseEntity<String> result = restTemplate.getForEntity(url, String.class);
+//
+//            ObjectReader reader = new ObjectMapper().readerFor(Map.class);
+//            Map<String, Object> map = reader.readValue(result.getBody());
+//            System.err.println(result.getStatusCode());
+//
+//            System.err.println(result.getBody());
+//        } catch (HttpClientErrorException hce) {
+//            System.err.println(hce.getStatusCode() + ": " + hce.getStatusText());
+//        } catch (Exception e) {
+//            System.err.println("Exception: " + e.getMessage());
+//        }
         
     }
 

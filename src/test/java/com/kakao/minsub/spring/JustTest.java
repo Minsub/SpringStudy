@@ -14,7 +14,7 @@ import java.util.Optional;
 public class JustTest {
     
     @Test
-    public void test() {
+    public void test22() {
         
         Date c1 = new Date();
         Date c2 = DateUtils.addDays(c1, -15);
@@ -23,8 +23,5 @@ public class JustTest {
         System.out.println(c1.compareTo(c2) > 0 ? c1 : c2);
     
         System.out.println(c2.before(DateUtils.addDays(new Date(), -14)));
-    
-        
-                
     }
 }

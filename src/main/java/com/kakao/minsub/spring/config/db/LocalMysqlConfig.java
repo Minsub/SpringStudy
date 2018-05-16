@@ -14,6 +14,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -57,6 +58,12 @@ public class LocalMysqlConfig {
     @Bean(name="localMysqlTransactionManager")
     public PlatformTransactionManager getTransactionManager(EntityManagerFactoryBuilder builder) throws IOException {
         return new JpaTransactionManager(getFactoryBean(builder).getObject());
+    }
+    
+    @Primary
+    @Bean(name="localMysqlTransactionTemplate")
+    public TransactionTemplate transactionTemplate(EntityManagerFactoryBuilder builder) throws IOException {
+        return new TransactionTemplate(getTransactionManager(builder));
     }
 
 
