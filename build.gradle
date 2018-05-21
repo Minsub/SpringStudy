@@ -27,6 +27,10 @@ war {
 	version = '0.0.1'
 }
 
+task hello << {
+	println "${System.properties['spring.profiles.active']}"
+}
+
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-jersey')
 	compile('org.springframework.boot:spring-boot-starter-data-rest')

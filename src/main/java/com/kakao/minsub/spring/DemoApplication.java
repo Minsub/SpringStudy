@@ -21,9 +21,10 @@ public class DemoApplication extends SpringBootServletInitializer{
 
 
 	public static void main(String[] args) {
-//		if (System.getProperty("spring.profiles.active") == null) {
-			System.setProperty("spring.profiles.active", "development");
-//		}
+		if (System.getProperty("spring.profiles.active") == null) {
+//			System.setProperty("spring.profiles.active", "development");
+			System.setProperty("spring.profiles.active", "production");
+		}
 
 		SpringApplication.run(DemoApplication.class, args);
 	}
