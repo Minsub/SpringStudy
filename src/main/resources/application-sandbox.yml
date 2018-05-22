@@ -1,0 +1,10 @@
+server:
+  port: ${application.port:8090}
+
+spring:
+  jpa:
+    hibernate.ddl-auto: update
+    show-sql: false
+    database: mysql
+  jersey:
+    type: filter
