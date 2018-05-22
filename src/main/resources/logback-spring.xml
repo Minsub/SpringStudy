@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<springProfile name="development">
+		<include resource="logback-base.xml"/>
+
+		<root level="DEBUG">
+			<appender-ref ref="application_log" />
+			<appender-ref ref="error_log" />
+		</root>
+	</springProfile>
+
+	<springProfile name="sandbox">
+		<include resource="logback-base.xml"/>
+
+		<root level="DEBUG">
+			<appender-ref ref="application_log" />
+			<appender-ref ref="error_log" />
+		</root>
+	</springProfile>
+
+	<springProfile name="production">
+		<include resource="logback-base.xml"/>
+		<!--<root level="INFO">-->
+		<root level="DEBUG">
+			<appender-ref ref="application_log" />
+			<appender-ref ref="error_log" />
+		</root>
+	</springProfile>
+
+</configuration>
