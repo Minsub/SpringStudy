@@ -2,6 +2,7 @@ package com.kakao.minsub.spring.config;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.kakao.minsub.spring.config.mapper.ConstraintValidationExceptionMapper;
+import com.kakao.minsub.spring.controller.*;
 import io.swagger.converter.ModelConverters;
 import io.swagger.jaxrs.config.BeanConfig;
 import io.swagger.jaxrs.listing.ApiListingResource;
@@ -19,12 +20,18 @@ public class JerseyConfig  extends ResourceConfig {
 
     public JerseyConfig() {
         registerEndpoints();
-        configureSwagger();
+//        configureSwagger();
     }
     
     private void registerEndpoints() {
-        packages("com.kakao.minsub.spring.controller");
-    
+//        packages("com.kakao.minsub.spring.controller");
+        register(HomeController.class);
+        register(PostController.class);
+        register(ProfileController.class);
+        register(RestController.class);
+        register(TestController.class);
+        register(UserController.class);
+
         register(ConstraintValidationExceptionMapper.class);
         register(FreemarkerMvcFeature.class);
         register(RolesAllowedDynamicFeature.class);

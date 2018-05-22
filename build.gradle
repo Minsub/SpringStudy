@@ -10,8 +10,6 @@ buildscript {
 	}
 }
 
-apply plugin: 'java'
-apply plugin: 'war'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
@@ -22,14 +20,20 @@ repositories {
 	mavenCentral()
 }
 
-war {
+jar {
 	baseName = 'springStudy'
 	version = '0.0.1'
+	enabled = true
 }
+
 
 task hello << {
 	println "${System.properties['spring.profiles.active']}"
 }
+
+//configurations {
+//	compile.exclude module: "spring-boot-starter-tomcat"
+//}
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-jersey')
@@ -38,6 +42,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-jdbc')
 	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-tomcat')
 	compile('org.springframework.boot:spring-boot-starter-cache')
 	compile('org.springframework.boot:spring-boot-starter-security')
 	
@@ -56,8 +61,7 @@ dependencies {
 //	provided group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
 //	providedRuntime('javax.servlet:javax.servlet-api')
 
-	runtime('mysql:mysql-connector-java')
+	compile('mysql:mysql-connector-java')
 	compileOnly('org.projectlombok:lombok')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
-	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 }
