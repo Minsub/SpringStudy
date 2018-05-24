@@ -7,7 +7,12 @@ buildscript {
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+
 	}
+}
+
+plugins {
+	id "org.ajoberstar.grgit" version "1.6.0"
 }
 
 apply plugin: 'idea'
@@ -20,12 +25,16 @@ repositories {
 	mavenCentral()
 }
 
-jar {
-	baseName = 'springStudy'
-	version = '0.0.1'
-	enabled = true
+ext {
+	git = org.ajoberstar.grgit.Grgit.open(project.rootDir)
 }
 
+
+jar {
+	baseName = 'springStudy'
+	version = "0.0.1.${git.head().abbreviatedId}-SNAPSHOT"
+	enabled = true
+}
 
 task hello << {
 	println "${System.properties['spring.profiles.active']}"
@@ -56,7 +65,6 @@ dependencies {
 	compile 'com.zaxxer:HikariCP:2.6.0'
 	compile group: 'net.sf.ehcache', name: 'ehcache', version: '2.10.3'
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.1'
-
 
 //	compile('javax.servlet:servlet-api')
 //	provided group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
