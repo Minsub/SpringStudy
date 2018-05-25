@@ -6,6 +6,7 @@ import com.kakao.minsub.spring.model.User;
 import com.kakao.minsub.spring.service.PostService;
 import com.kakao.minsub.spring.service.UserService;
 import com.kakao.minsub.spring.util.TimeControll;
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import java.util.Map;
 
 @EnableCaching
 @Path("/api")
+@Api("Rest")
 @Produces(MediaType.APPLICATION_JSON)
 public class RestController {
 

@@ -13,14 +13,16 @@ import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.glassfish.jersey.server.model.Resource;
 import org.glassfish.jersey.server.mvc.freemarker.FreemarkerMvcFeature;
 import org.glassfish.jersey.server.wadl.internal.WadlResource;
+import org.glassfish.jersey.servlet.ServletProperties;
 import org.springframework.stereotype.Component;
 
 @Component
 public class JerseyConfig  extends ResourceConfig {
 
     public JerseyConfig() {
+        property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "/(static|public)/.*");
         registerEndpoints();
-//        configureSwagger();
+        configureSwagger();
     }
     
     private void registerEndpoints() {
@@ -39,19 +41,11 @@ public class JerseyConfig  extends ResourceConfig {
     }
     
     private void configureSwagger() {
-        register(ApiListingResource.class);
-//        register(SwaggerSerializers.class);
-
-        BeanConfig beanConfig = new BeanConfig();
-        beanConfig.setConfigId("springStudy-swagger-example");
-        beanConfig.setTitle("springStudy-swagger");
-        beanConfig.setVersion("1.0.2");
-        beanConfig.setSchemes(new String[]{"http","https"});
-        beanConfig.setHost("localhost:8888");
-//        beanConfig.setBasePath("/api");
-        beanConfig.setResourcePackage("com.kakao.minsub.spring.controller");
-        beanConfig.setPrettyPrint(true);
-        beanConfig.setScan(true);
+        final Resource.Builder builder = Resource.builder(ApiListingResource.class);
+        builder.path("swagger.{type:json|yaml}");
+        final Resource apiListingResource = builder.build();
+        registerResources(apiListingResource);
+        register(SwaggerSerializers.class);
     }
     
 }

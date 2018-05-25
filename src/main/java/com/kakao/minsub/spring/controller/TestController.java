@@ -3,6 +3,7 @@ package com.kakao.minsub.spring.controller;
 
 import com.kakao.minsub.spring.service.TestService;
 import com.kakao.minsub.spring.service.UserService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.GET;
@@ -14,6 +15,7 @@ import java.util.Map;
 
 
 @Path("/test")
+@Api("Test")
 @Produces(MediaType.APPLICATION_JSON)
 public class TestController {
 

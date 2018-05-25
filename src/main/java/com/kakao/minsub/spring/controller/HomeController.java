@@ -1,6 +1,7 @@
 package com.kakao.minsub.spring.controller;
 
 
+import io.swagger.annotations.Api;
 import org.glassfish.jersey.server.mvc.Viewable;
 
 import javax.annotation.security.RolesAllowed;

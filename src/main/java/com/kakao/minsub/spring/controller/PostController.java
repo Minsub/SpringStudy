@@ -6,6 +6,7 @@ import com.kakao.minsub.spring.model.User;
 import com.kakao.minsub.spring.service.PostService;
 import com.kakao.minsub.spring.service.UserService;
 import com.kakao.minsub.spring.util.TimeControll;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import org.slf4j.Logger;
@@ -26,6 +27,7 @@ import java.util.Collection;
 
 @EnableCaching
 @Path("/post")
+@Api("Post")
 @Produces(MediaType.APPLICATION_JSON)
 public class PostController {
 
