@@ -41,11 +41,28 @@ public class JerseyConfig  extends ResourceConfig {
     }
     
     private void configureSwagger() {
-        final Resource.Builder builder = Resource.builder(ApiListingResource.class);
-        builder.path("swagger.{type:json|yaml}");
-        final Resource apiListingResource = builder.build();
-        registerResources(apiListingResource);
-        register(SwaggerSerializers.class);
+//        final Resource.Builder builder = Resource.builder(ApiListingResource.class);
+//        builder.path("swagger.{type:json|yaml}");
+//        final Resource apiListingResource = builder.build();
+//        registerResources(apiListingResource);
+//        register(SwaggerSerializers.class);
+    
+        this.register(ApiListingResource.class);
+        this.register(SwaggerSerializers.class);
+    
+        BeanConfig config = new BeanConfig();
+        config.setTitle("POC - Restful API by Spring Boot, Jersey, Swagger");
+        config.setVersion("v1");
+        config.setContact("gray.ji");
+        config.setSchemes(new String[] { "http", "https" });
+        config.setBasePath("/");
+        config.setResourcePackage("com.kakao.minsub.spring.controller");
+        config.setPrettyPrint(true);
+        config.setScan(true);
+        
+        
+        // https://github.com/swagger-api/swagger-ui
+        // https://github.com/brightzheng100/springboot-jersey-swagger
     }
     
 }
