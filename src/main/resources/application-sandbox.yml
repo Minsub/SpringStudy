@@ -1,7 +1,8 @@
 server:
-  port: ${application.port:8090}
+  port: ${application.port:8080}
 
 spring:
+  pidfile: ./logs/application.pid
   jpa:
     hibernate.ddl-auto: update
     show-sql: false
