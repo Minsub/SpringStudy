@@ -10,6 +10,9 @@
 </head>
 <body>
     <h2>devTools</h2>
+    <h2>NEW VERSION</h2>
+    <h2>NEW VERSION</h2>
+    <h2>NEW VERSION</h2>
     <h3>Test</h3>
     <a id="kakao-login-btn"></a>
     <a href="http://developers.kakao.com/logout"></a>
