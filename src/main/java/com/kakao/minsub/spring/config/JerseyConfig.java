@@ -16,13 +16,20 @@ import org.glassfish.jersey.server.wadl.internal.WadlResource;
 import org.glassfish.jersey.servlet.ServletProperties;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+
 @Component
 public class JerseyConfig  extends ResourceConfig {
 
     public JerseyConfig() {
         property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "/(static|public)/.*");
         registerEndpoints();
-        configureSwagger();
+//        configureSwagger();
+    }
+    
+    @PostConstruct
+    public void init() {
+        this.configureSwagger();
     }
     
     private void registerEndpoints() {
