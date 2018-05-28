@@ -6,9 +6,22 @@ Spring Study
   - compile('org.springframework.boot:spring-boot-starter-jersey')
   - compile('io.swagger:swagger-jersey2-jaxrs:1.5.10')
 
-1. https://github.com/swagger-api/swagger-ui 에서 dist폴더이 있는 파일을 받아 resource/static/swagger로 복사
+* localhost:8080/static/swagger/index.html
+1. https://github.com/swagger-api/swagger-ui 에서 dist폴더이 있는 파일을 받아 resource/static/swagger 복사
 2. config/JerseyConfig.java 참조
-3. controller에 annotation을 지정
+3. resourceHandler 등록
+```java
+@Configuration
+@EnableWebMvc
+public class WebConfig extends WebMvcConfigurerAdapter {
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+    }
+}
+```
+
+4. controller에 annotation을 지정
 
 ```java
 @Path("/user")

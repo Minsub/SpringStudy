@@ -18,12 +18,12 @@ public class JerseyConfig extends ResourceConfig {
     public JerseyConfig() {
         property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "/(static|public)/.*");
         registerEndpoints();
+        registerExceptionMappers();
         configureSwagger();
     }
     
     private void registerEndpoints() {
-        // jar로 export해서 실행시 packages로 등록 불가
-        //packages("com.kakao.minsub.spring.controller");
+        //packages("com.kakao.minsub.spring.controller"); // not working in executable jar mode
         register(HomeController.class);
         register(PostController.class);
         register(ProfileController.class);
@@ -31,16 +31,14 @@ public class JerseyConfig extends ResourceConfig {
         register(TestController.class);
         register(UserController.class);
 
-        register(ConstraintValidationExceptionMapper.class);
         register(FreemarkerMvcFeature.class);
         register(RolesAllowedDynamicFeature.class);
-        register(WadlResource.class);
     }
-
-    /*
-    https://github.com/swagger-api/swagger-ui 에서 dist를 받아 resource/static/swagger로 복사
-    localhost:8080/static/swagger/index.html
-     */
+    
+    private void registerExceptionMappers() {
+        register(ConstraintValidationExceptionMapper.class);
+    }
+    
     private void configureSwagger() {
         register(ApiListingResource.class);
         register(SwaggerSerializers.class);
@@ -54,9 +52,6 @@ public class JerseyConfig extends ResourceConfig {
         config.setResourcePackage("com.kakao.minsub.spring.controller");
         config.setPrettyPrint(true);
         config.setScan(true);
-
-        // https://github.com/swagger-api/swagger-ui
-        // https://github.com/brightzheng100/springboot-jersey-swagger
     }
     
 }

@@ -35,4 +35,6 @@
 		<appender-ref ref="error_log" />
 	</logger>
 
+	<logger name="com.zaxxer.hikari.pool" level="INFO"/>
+
 </included>

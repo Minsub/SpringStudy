@@ -11,8 +11,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/swagger-ui/**").addResourceLocations("classpath:/static/swagger-ui/");
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-        System.err.println("@@@@@@@@@@@@@@@@@");
     }
 }
