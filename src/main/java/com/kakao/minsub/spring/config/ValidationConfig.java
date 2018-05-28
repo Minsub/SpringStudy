@@ -15,6 +15,7 @@ import javax.validation.Validator;
 
 @Configuration
 public class ValidationConfig {
+    
     @Autowired
     @Qualifier("messageSource")
     private MessageSource messageSource;
@@ -29,7 +30,7 @@ public class ValidationConfig {
     @Bean
     public Validator validator() {
         LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
-        validator.setMessageInterpolator( messageInterpolator() );
+        validator.setMessageInterpolator(messageInterpolator());
         return validator;
     }
 }

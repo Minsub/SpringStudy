@@ -13,6 +13,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -28,16 +29,21 @@ public class Profile implements Serializable {
     @GeneratedValue
     private Integer id;
 
-
     @NotNull(message = "필수 입력 항목입니다.")
-    @NotBlank(message = "{error.validation.blank}", groups = First.class)
-    @Length(min = 5, max = 15, message = "{model.profiles.name.length.message}", groups = Second.class)
+    @NotBlank(message = "{validator.constraints.Profile.name.blank}", groups = First.class)
+    @Length(min = 5, max = 255, message = "{validator.constraints.Profile.name.length}", groups = Second.class)
     @Email(groups = Third.class)
     private String name;
-
+    
+    @NotNull(message = "필수 입력 항목입니다.")
+    @Pattern(
+        regexp = "^[0-9a-z가-힣\\-_]+$", // 한글/영문 소문자/숫자/-_
+        message = "한글, 영문 소문자, 숫자, 특수문자(-_)만 사용가능합니다.(띄어쓰기 불가)",
+        groups = { First.class }
+    )
     private String searchId;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name="profileId", insertable = false,
             foreignKey = @ForeignKey(name="none",value = ConstraintMode.NO_CONSTRAINT))
     private Collection<Post> posts;
