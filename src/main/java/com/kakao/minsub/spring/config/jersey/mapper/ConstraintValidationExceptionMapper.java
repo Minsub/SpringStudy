@@ -1,6 +1,10 @@
-package com.kakao.minsub.spring.config.mapper;
+package com.kakao.minsub.spring.config.jersey.mapper;
 
+import com.kakao.minsub.spring.config.jersey.ErrorResponseGenerator;
+import com.kakao.minsub.spring.model.EntityErrorResponse;
 import com.kakao.minsub.spring.model.ErrorResponse;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
 import javax.validation.ConstraintViolation;
@@ -11,6 +15,9 @@ import java.util.Set;
 
 public class ConstraintValidationExceptionMapper implements ExceptionMapper<ConstraintViolationException> {
 
+    @Autowired
+    ErrorResponseGenerator errorResponseGenerator;
+    
     @Override
     public Response toResponse(final ConstraintViolationException exception) {
         Set<ConstraintViolation<?>> violations = exception.getConstraintViolations();
@@ -20,16 +27,15 @@ public class ConstraintValidationExceptionMapper implements ExceptionMapper<Cons
             singleViolation = violations.iterator().next();
         }
 
-        ErrorResponse body = new ErrorResponse();
-        body.code = String.valueOf(Response.Status.BAD_REQUEST.getStatusCode());
+        EntityErrorResponse body = new EntityErrorResponse();
+        body.code = Response.Status.BAD_REQUEST.getStatusCode();
+        body.message = ExceptionUtils.getStackTrace(exception);
         if (singleViolation != null) {
             body.entityName = singleViolation.getLeafBean().getClass().getSimpleName();
             body.columnName = singleViolation.getPropertyPath().toString();
-            body.message = singleViolation.getMessage();
+            body.entityMessage = singleViolation.getMessage();
         }
 
-        return Response.status(Response.Status.BAD_REQUEST)
-                .entity(body)
-                .build();
+        return errorResponseGenerator.generate(Response.Status.BAD_REQUEST, body);
     }
 }

@@ -1,6 +1,7 @@
 package com.kakao.minsub.spring.config;
 
-import com.kakao.minsub.spring.config.mapper.ConstraintValidationExceptionMapper;
+import com.kakao.minsub.spring.config.jersey.mapper.ConstraintValidationExceptionMapper;
+import com.kakao.minsub.spring.config.jersey.mapper.DefaultExceptionMapper;
 import com.kakao.minsub.spring.controller.*;
 import io.swagger.jaxrs.config.BeanConfig;
 import io.swagger.jaxrs.listing.ApiListingResource;
@@ -8,7 +9,6 @@ import io.swagger.jaxrs.listing.SwaggerSerializers;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.glassfish.jersey.server.mvc.freemarker.FreemarkerMvcFeature;
-import org.glassfish.jersey.server.wadl.internal.WadlResource;
 import org.glassfish.jersey.servlet.ServletProperties;
 import org.springframework.stereotype.Component;
 
@@ -37,6 +37,7 @@ public class JerseyConfig extends ResourceConfig {
     
     private void registerExceptionMappers() {
         register(ConstraintValidationExceptionMapper.class);
+        register(DefaultExceptionMapper.class);
     }
     
     private void configureSwagger() {
