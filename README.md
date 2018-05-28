@@ -58,6 +58,13 @@ public class DefaultExceptionMapper implements ExceptionMapper<Exception> {
 register(DefaultExceptionMapper.class);
 ```
 
+3. http request / response filter 설정
+ - ContainerRequestFilter, ContainerResponseFilter 를 상속받는 클래스를 만듬
+ - Jersey.java (ResourceConfig)에서 register를 함
+ - custom Annotation을 만들어 request들어오는 Controller에서 선언한 후 filter에서 해당 annotation인지 체크해서 filtering 함
+ - [config/jersey/filter](https://github.com/Minsub/SpringStudy/tree/master/src/main/java/com/kakao/minsub/spring/config/jersey/filter) 참조
+
+
 
 
 ### spring JPA + hikari pool

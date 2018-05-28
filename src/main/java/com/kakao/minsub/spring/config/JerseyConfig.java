@@ -1,5 +1,6 @@
 package com.kakao.minsub.spring.config;
 
+import com.kakao.minsub.spring.config.jersey.filter.ManagerFilter;
 import com.kakao.minsub.spring.config.jersey.mapper.ConstraintValidationExceptionMapper;
 import com.kakao.minsub.spring.config.jersey.mapper.DefaultExceptionMapper;
 import com.kakao.minsub.spring.controller.*;
@@ -19,6 +20,7 @@ public class JerseyConfig extends ResourceConfig {
         property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "/(static|public)/.*");
         registerEndpoints();
         registerExceptionMappers();
+        registerFilters();
         configureSwagger();
     }
     
@@ -40,6 +42,9 @@ public class JerseyConfig extends ResourceConfig {
         register(DefaultExceptionMapper.class);
     }
     
+    private void registerFilters() {
+        register(ManagerFilter.class);
+    }
     private void configureSwagger() {
         register(ApiListingResource.class);
         register(SwaggerSerializers.class);

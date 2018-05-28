@@ -1,6 +1,8 @@
 package com.kakao.minsub.spring.controller;
 
 
+import com.kakao.minsub.spring.config.annotation.FeatureSupported;
+import com.kakao.minsub.spring.config.annotation.FeatureSupported.FeatureType;
 import com.kakao.minsub.spring.model.Profile;
 import com.kakao.minsub.spring.service.ProfileService;
 import io.swagger.annotations.Api;
@@ -14,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 @Api("Profile")
 @Path("/profile")
 @Produces(MediaType.APPLICATION_JSON)
+@FeatureSupported(FeatureType.manager)
 public class ProfileController {
 
     @Autowired
