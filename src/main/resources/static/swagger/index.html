@@ -38,7 +38,7 @@
     <script src="./swagger-ui-standalone-preset.js"> </script>
     <script>
     window.onload = function() {
-
+      // doc: https://github.com/swagger-api/swagger-ui/blob/master/docs/usage/configuration.md
       // Build a system
       const ui = SwaggerUIBundle({
 //        url: "http://petstore.swagger.io/v2/swagger.json",
@@ -52,8 +52,20 @@
         plugins: [
           SwaggerUIBundle.plugins.DownloadUrl
         ],
-        layout: "StandaloneLayout"
-      })
+        layout: "StandaloneLayout",
+        configs: {
+          preFetch: function(req) {
+            const authToken = "ABCCCCCCCCC"; // TEST
+            if (authToken) {
+//              req.headers["Authorization"] = "Bearer " + authToken;
+            }
+            return req;
+          }
+        },
+      });
+
+      ui.preauthorizeBasic("basicAuth", "kakao", "kpassword");
+      ui.preauthorizeApiKey("apiKey", "acbde12345");
 
       window.ui = ui
     }

@@ -22,9 +22,7 @@ public abstract class DynamicFeatureSupportedFilter implements ContainerRequestF
     
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-        FeatureSupported featureSupported = resourceInfo.getResourceClass().getAnnotation(FeatureSupported.class);
-        FeatureType featureType = featureSupported == null ? FeatureType.undefined : featureSupported.value();
-        if (supportedFeatures().contains(featureType)) {
+        if (canFilter()) {
             if(logger.isDebugEnabled()) {
                 logger.debug("apply filter: request {}", this.getClass().getName());
             }
@@ -34,9 +32,7 @@ public abstract class DynamicFeatureSupportedFilter implements ContainerRequestF
     
     @Override
     public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
-        FeatureSupported featureSupported = resourceInfo.getResourceClass().getAnnotation(FeatureSupported.class);
-        FeatureType featureType = featureSupported == null ? FeatureType.undefined : featureSupported.value();
-        if (supportedFeatures().contains(featureType)) {
+        if (canFilter()) {
             if(logger.isDebugEnabled()) {
                 logger.debug("apply filter: response {}", this.getClass().getName());
             }
@@ -45,4 +41,15 @@ public abstract class DynamicFeatureSupportedFilter implements ContainerRequestF
     }
     
     
+    private boolean canFilter() {
+        Class<?> classes = resourceInfo.getResourceClass();
+        if (classes != null) {
+            FeatureSupported featureSupported = classes.getAnnotation(FeatureSupported.class);
+            FeatureType featureType = featureSupported == null ? FeatureType.undefined : featureSupported.value();
+            if (supportedFeatures().contains(featureType)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

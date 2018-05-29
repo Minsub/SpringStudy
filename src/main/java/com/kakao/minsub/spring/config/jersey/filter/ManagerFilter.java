@@ -3,6 +3,7 @@ package com.kakao.minsub.spring.config.jersey.filter;
 import com.kakao.minsub.spring.config.annotation.FeatureSupported.FeatureType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
@@ -14,6 +15,8 @@ public class ManagerFilter extends DynamicFeatureSupportedFilter {
     @Override
     public void filterRequest(ContainerRequestContext requestContext) {
         logger.debug("ManagerFilter: request. headers: {}", requestContext.getHeaders());
+        final String auth = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
+        logger.info("auth: {}", auth);
     }
     
     @Override

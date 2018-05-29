@@ -1,6 +1,8 @@
 package com.kakao.minsub.spring.config;
 
 
+import com.kakao.minsub.spring.config.security.DefaultAuthenticatedProcessingFilter;
+import com.kakao.minsub.spring.config.security.DefaultAuthenticationProvider;
 import com.kakao.minsub.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +27,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private DefaultAuthenticationProvider defaultAuthenticationProvider;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -40,13 +45,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 
                 .anyRequest().authenticated()
                 .and()
+                .addFilter(new DefaultAuthenticatedProcessingFilter(authenticationManager()))
                 .httpBasic();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService)
-                .passwordEncoder(userService.passwordEncoder());
+//        auth.userDetailsService(userService).passwordEncoder(userService.passwordEncoder());
+        auth.authenticationProvider(defaultAuthenticationProvider);
 
 //        auth.inMemoryAuthentication()
 //                .withUser("kakao")
@@ -63,6 +69,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .antMatchers("/static/**")
                 .antMatchers("/resources/**")
-                .antMatchers("/swagger-ui/**").anyRequest();
+                .antMatchers("/swagger.json")
+//                .anyRequest()
+        ;
     }
+    
+    
 }
