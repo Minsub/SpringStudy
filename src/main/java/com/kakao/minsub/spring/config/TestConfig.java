@@ -9,23 +9,21 @@ import org.springframework.context.annotation.PropertySource;
 import java.util.Properties;
 
 @Configuration
-@PropertySource("classpath:test_config.properties")
+@PropertySource("classpath:db-production.properties")
 public class TestConfig {
 
-    @Value("${test.var.name}")
+    @Value("${db.local_mysql.username}")
     private String name;
 
-    @Value("${test.var.age}")
-    private String age;
+    @Value("${db.local_mysql.jdbcUrl}")
+    private String url;
 
     @Bean(name="testProps")
-    @ConfigurationProperties(prefix = "test.props")
+    @ConfigurationProperties(prefix = "db.local_mysql")
     public Properties getProperties() {
         Properties props = new Properties();
         props.setProperty("name", name);
-        props.setProperty("age", age);
+        props.setProperty("url", url);
         return props;
     }
-
-
 }
