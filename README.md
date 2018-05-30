@@ -139,8 +139,29 @@ if (!violations.isEmpty()) {
  - ConstraintViolationException 을 Jersey의 ExceptionMapper로 받아서 처리하면 validatior의 메시지를 reponse로 쉽게 전달 가능
 
 
-### cache
-- TODO
+3. JPA + redis cache
+ - 간단한 설정은 application.yml을 통해 할 수 있다
+```yaml
+  cache:
+    type: redis
+  redis:
+    host: jiminsub.iptime.org
+    port: 6379
+    password: wlalstjq1
+```
+ - 하지만 디테일할 설정이 불가능하기 때문에 java파일로 설정을 한다. [config/CacheConfig.java](https://github.com/Minsub/SpringStudy/blob/develop/src/main/java/com/kakao/minsub/spring/config/CacheConfig.java) 참조
+ - CacheManager을 application.yml에서 기본적으로 만들어주는 구조다.
+ - repository에서 annotation을 통해 cacheName과 key를 지정하면 알아서 cache가 있으면 redis, 없다면 DB에서 읽게 된다.
+```java
+@CacheConfig(cacheNames="post")
+public interface PostRepository extends CrudRepository<Post, Integer> {
+    @Cacheable(key="#p0")
+    Post findOne(Integer id);
+
+    @CacheEvict(key="#p0")
+    default void evictCache(Integer id) {};
+}
+```
 
 ### gradle
 - TODO
