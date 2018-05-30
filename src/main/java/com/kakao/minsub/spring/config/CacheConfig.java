@@ -3,7 +3,6 @@ package com.kakao.minsub.spring.config;
 import lombok.Data;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.AbstractCachingConfiguration;
 import org.springframework.cache.annotation.EnableCaching;
