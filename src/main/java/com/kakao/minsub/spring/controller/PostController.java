@@ -23,6 +23,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.util.Collection;
+import java.util.List;
 
 
 @EnableCaching
@@ -85,6 +86,12 @@ public class PostController {
                                    @QueryParam("page") @DefaultValue("1") int page) {
         final Pageable pageable = new PageRequest(page , size, new Sort(Sort.Direction.DESC, "id"));
         return postService.findAll(pageable);
+    }
+    
+    @GET
+    @Path("/real_all")
+    public List<Post> all() {
+        return postService.findAll();
     }
 
     @GET

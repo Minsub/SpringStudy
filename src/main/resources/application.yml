@@ -9,12 +9,13 @@ spring:
     database: mysql
   jersey:
     type: filter
-  cache:
-    type: redis
-  redis:
-    host: jiminsub.iptime.org
-    port: 6379
-    password: wlalstjq1
+# CacheConfig.java로 대체
+#  cache:
+#    type: redis
+#  redis:
+#    host: jiminsub.iptime.org
+#    port: 6379
+#    password: wlalstjq1
 
 context:
   listener:

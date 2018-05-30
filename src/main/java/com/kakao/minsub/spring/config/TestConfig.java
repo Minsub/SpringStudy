@@ -9,7 +9,7 @@ import org.springframework.context.annotation.PropertySource;
 import java.util.Properties;
 
 @Configuration
-@PropertySource("classpath:db-production.properties")
+@PropertySource("classpath:common-production.properties")
 public class TestConfig {
 
     @Value("${db.local_mysql.username}")

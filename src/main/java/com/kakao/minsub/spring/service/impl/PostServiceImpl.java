@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -53,6 +54,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public Page<Post> findAll(Pageable pageable) {
         return postRepository.findAll(pageable);
+    }
+    
+    @Override
+    public List<Post> findAll() {
+        return postRepository.findAll();
     }
     
     @Override

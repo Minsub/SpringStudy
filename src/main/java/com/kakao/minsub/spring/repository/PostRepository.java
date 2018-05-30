@@ -11,6 +11,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by kakao on 2017. 7. 14..
@@ -28,6 +29,9 @@ public interface PostRepository extends CrudRepository<Post, Integer> {
     Collection<Post> findAvailablePost();
 
     Page<Post> findAll(Pageable pageable);
+    
+    @Cacheable(key="'all'")
+    List<Post> findAll();
     
     @CacheEvict(key="#p0")
     default void evictCache(Integer id) {

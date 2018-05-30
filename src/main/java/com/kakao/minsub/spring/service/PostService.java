@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by kakao on 2017. 7. 14..
@@ -22,6 +23,8 @@ public interface PostService {
     Collection<Post> findAvailablePosts();
 
     Page<Post> findAll(Pageable pageable);
+    
+    List<Post> findAll();
     
     void refreshCache(int id);
 
