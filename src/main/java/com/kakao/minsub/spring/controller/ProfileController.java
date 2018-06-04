@@ -34,14 +34,14 @@ public class ProfileController {
     @POST
     @Path("/create")
     public Profile create(final Profile profile) {
-        return profileService.save(null, profile.getName(), profile.getSearchId());
+        return profileService.save(profile);
     }
     
     @ApiOperation("프로필 업데이트")
     @PUT
     @Path("/{id}")
     public Profile update(@PathParam("id") final int id, final Profile profile) {
-        return profileService.save(id, profile.getName(), profile.getSearchId());
+        return profileService.update(profile);
     }
     
     @ApiOperation("프로필 지우기")

@@ -37,5 +37,9 @@ public class JustTest {
         System.out.println(output);
     
         System.out.println(mapper.readValue(output, Map.class));
+        
+        
+        String s = "kafka";
+        System.out.println(Integer.valueOf(s));
     }
 }

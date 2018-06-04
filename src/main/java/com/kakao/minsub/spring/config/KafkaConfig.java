@@ -1,9 +1,13 @@
 package com.kakao.minsub.spring.config;
 
-import com.google.common.collect.Lists;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.kakao.minsub.spring.config.serialize.ProfileSerializer;
+import com.kakao.minsub.spring.model.Profile;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -19,7 +23,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 @Configuration
 @PropertySource("classpath:common-${spring.profiles.active}.properties")
@@ -35,9 +38,6 @@ public class KafkaConfig {
     @Value("${kafka.topic}")
     private String topic;
     
-    @Value("${kafka.worker.count}")
-    private int workerCount;
-    
     @Bean
     @Primary
     public Producer<String, String> kafkaProducer() {
@@ -50,10 +50,9 @@ public class KafkaConfig {
         KafkaProducer<String, String> producer = new KafkaProducer<>(props);
         return producer;
     }
-
+    
     @Bean
-    @Primary
-    public KafkaConsumer<String, String> kafkaConsumer() {
+    public Properties kafkaConsumerProp() {
         final Properties props = new Properties();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
@@ -61,8 +60,18 @@ public class KafkaConfig {
         props.put(ConsumerConfig.GROUP_ID_CONFIG, consumerGroup);
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true");
         props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "1000");
-
-        KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<>(props);
-        return kafkaConsumer;
+        return props;
+    }
+    
+    @Bean
+    public ObjectMapper kafkaJacksonObjectMapper() {
+        SimpleModule module = new SimpleModule();
+//        module.addSerializer(Profile.class, new ProfileSerializer());
+        
+        return new ObjectMapper()
+                .setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
+                .registerModule(module);
     }
 }

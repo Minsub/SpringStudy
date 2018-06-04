@@ -22,9 +22,6 @@ public class ListenerTest extends BaseSpringTest {
     @Test
     public void publish() {
         eventPublisher.publishEvent(new SampleEvent("test message!!!"));
-        eventPublisher.publishEvent(new SampleEvent22("test message22222!!!"));
-    
         assertNotNull(testService);
-        
     }
 }
