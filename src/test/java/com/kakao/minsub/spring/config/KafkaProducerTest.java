@@ -7,9 +7,12 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.apache.kafka.common.serialization.StringSerializer;
 import org.assertj.core.util.Lists;
 import org.junit.Assert;
 import org.junit.Test;
@@ -72,6 +75,23 @@ public class KafkaProducerTest extends BaseSpringTest {
         }
         kafkaConsumer.close();
         logger.info("FINISH");
+    }
+    
+    @Test
+    public void multoBrokerProducerTest() throws Exception {
+        final Properties props = new Properties();
+    
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "jiminsub.iptime.org:9092,jiminsub.iptime.org:9093,jiminsub.iptime.org:9094");
+        props.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "gzip");
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        KafkaProducer<String, String> producer = new KafkaProducer<>(props);
+    
+        kafkaProducer.send(new ProducerRecord<>("my-replicated-topic", 0, "testKey-0", valueGenerate()));
+        kafkaProducer.send(new ProducerRecord<>("my-replicated-topic", 0, "testKey-1", valueGenerate()));
+        kafkaProducer.send(new ProducerRecord<>("my-replicated-topic", 0, "testKey-2", valueGenerate()));
+        kafkaProducer.send(new ProducerRecord<>("my-replicated-topic", 0, "testKey-0", valueGenerate()));
+        kafkaProducer.close();
     }
 
     @Test
