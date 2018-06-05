@@ -25,6 +25,20 @@
 		</rollingPolicy>
 	</appender>
 
+	<appender name="request_log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+		<file>logs/request.log</file>
+		<encoder>
+			<pattern>%m%n</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>logs/request_logs/%d{yyyyMMdd,aux}/request.log.%d{yyyyMMddHH}</fileNamePattern>
+			<maxHistory>336</maxHistory>
+		</rollingPolicy>
+	</appender>
+
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
 			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %p %t [%c{1}] %m%n</pattern>
@@ -33,6 +47,10 @@
 
 	<logger name="error_log" level="ERROR" additivity="false">
 		<appender-ref ref="error_log" />
+	</logger>
+
+	<logger name="request_log" level="INFO" additivity="false">
+		<appender-ref ref="request_log" />
 	</logger>
 
 	<logger name="com.zaxxer.hikari.pool" level="INFO"/>
