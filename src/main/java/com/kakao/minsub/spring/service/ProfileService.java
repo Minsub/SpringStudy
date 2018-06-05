@@ -9,7 +9,9 @@ public interface ProfileService {
 
     public Profile findOne(int profileId);
 
-    public Profile save(Integer id, String name, String searchId);
+    public Profile save(Profile profile);
+    
+    public Profile update(Profile profile);
 
     public void delete(Integer id);
 }

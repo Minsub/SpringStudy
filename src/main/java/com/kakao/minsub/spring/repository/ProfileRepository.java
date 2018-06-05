@@ -1,16 +1,15 @@
 package com.kakao.minsub.spring.repository;
 
-import com.kakao.minsub.spring.model.Post;
 import com.kakao.minsub.spring.model.Profile;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.repository.Repository;
 
-import java.util.Collection;
+import java.util.Optional;
 
-/**
- * Created by kakao on 2017. 7. 14..
- */
-public interface ProfileRepository extends CrudRepository<Profile, Integer> {
+public interface ProfileRepository extends Repository<Profile, Integer> {
 
+    Optional<Profile> findOne(Integer profileId);
+    
+    Profile save(Profile profile);
+    
+    void delete(Integer profileId);
 }

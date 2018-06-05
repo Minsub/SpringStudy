@@ -46,6 +46,7 @@ public class Profile implements Serializable {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name="profileId", insertable = false,
             foreignKey = @ForeignKey(name="none",value = ConstraintMode.NO_CONSTRAINT))
+    @Transient
     private Collection<Post> posts;
     
     @Override
