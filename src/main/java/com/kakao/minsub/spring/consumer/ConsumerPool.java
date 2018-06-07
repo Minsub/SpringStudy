@@ -21,12 +21,17 @@ public class ConsumerPool {
     @Value("${kafka.topic}")
     private String topic;
     
+    @Value("${kafka.enable}")
+    private boolean enable;
+    
     private ExecutorService executorService;
 
     @PostConstruct
     public void startConsumer() throws Exception {
-        logger.info("startConsumer");
-        this.executorService = Executors.newFixedThreadPool(3);
-        executorService.submit(new ProfileConsumer(topic, kafkaConsumerProp));
+        if (enable) {
+            logger.info("startConsumer");
+            this.executorService = Executors.newFixedThreadPool(3);
+            executorService.submit(new ProfileConsumer(topic, kafkaConsumerProp));
+        }
     }
 }

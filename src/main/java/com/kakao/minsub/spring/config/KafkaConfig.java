@@ -38,11 +38,16 @@ public class KafkaConfig {
     @Value("${kafka.topic}")
     private String topic;
     
+    @Value("${kafka.enable}")
+    private boolean enable;
+    
     @Bean
     @Primary
     public Producer<String, String> kafkaProducer() {
+        if (!enable) {
+            return null;
+        }
         final Properties props = new Properties();
-
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "gzip");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());

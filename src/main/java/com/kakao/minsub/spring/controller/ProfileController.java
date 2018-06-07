@@ -41,6 +41,7 @@ public class ProfileController {
     @PUT
     @Path("/{id}")
     public Profile update(@PathParam("id") final int id, final Profile profile) {
+        profile.setId(id);
         return profileService.update(profile);
     }
     

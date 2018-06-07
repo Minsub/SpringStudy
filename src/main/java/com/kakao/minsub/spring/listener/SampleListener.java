@@ -27,6 +27,10 @@ public class SampleListener {
     @Value("${kafka.topic}")
     private String topic;
     
+    @Value("${kafka.enable}")
+    private boolean enable;
+    
+    
     @Resource(name = "kafkaJacksonObjectMapper")
     private ObjectMapper objectMapper;
     
@@ -40,6 +44,10 @@ public class SampleListener {
     protected Future<Void> handleKafkaEvent(final KafkaEvent<Profile> profileEvent) {
         Profile profile = profileEvent.getTarget();
         logger.info("handleEvent: {}", profile);
+        
+        if (!enable) {
+            return null;
+        }
         
         try {
             List<PartitionInfo> partitionInfos = kafkaProducer.partitionsFor(topic);
@@ -60,6 +68,8 @@ public class SampleListener {
     @PreDestroy
     public void destroy() throws Exception {
         logger.info("Destroying SampleListener");
-        kafkaProducer.close();
+        if (enable) {
+            kafkaProducer.close();
+        }
     }
 }
