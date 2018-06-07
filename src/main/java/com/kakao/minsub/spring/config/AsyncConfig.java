@@ -1,8 +1,12 @@
 package com.kakao.minsub.spring.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
+import org.springframework.aop.interceptor.SimpleAsyncUncaughtExceptionHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -14,10 +18,7 @@ import java.util.concurrent.Executor;
 @Configuration
 @EnableAsync
 public class AsyncConfig implements AsyncConfigurer {
-//    @Bean(name = "threadPoolTaskExecutor")
-//    public Executor threadPoolTaskExecutor() {
-//        return new ThreadPoolTaskExecutor();
-//    }
+    private final Logger logger = LoggerFactory.getLogger(KafkaConfig.class);
     
     @Override
     public Executor getAsyncExecutor() {
@@ -28,15 +29,24 @@ public class AsyncConfig implements AsyncConfigurer {
         return scheduler;
     }
     
+    @Bean
+    public Executor simpleAsyncTaskExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(2);
+        executor.setWaitForTasksToCompleteOnShutdown(true);
+        return executor;
+    }
+    
     @Override
     public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+//        return new SimpleAsyncUncaughtExceptionHandler();
         return new AsyncUncaughtExceptionHandler() {
             @Override
             public void handleUncaughtException(Throwable throwable, Method method, Object... params) {
-                System.out.println("Exception message - " + throwable.getMessage());
-                System.out.println("Method name - " + method.getName());
+                logger.debug("Exception message - " + throwable.getMessage());
+                logger.debug("Method name - " + method.getName());
                 for (Object param : params) {
-                    System.out.println("Parameter value - " + param);
+                    logger.debug("Parameter value - " + param);
                 }
             }
         };

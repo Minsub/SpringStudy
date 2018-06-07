@@ -3,22 +3,19 @@ package com.kakao.minsub.spring.service.impl;
 import com.kakao.minsub.spring.model.Profile;
 import com.kakao.minsub.spring.repository.ProfileRepository;
 import com.kakao.minsub.spring.service.TestService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.LockModeType;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by kakao on 2017. 7. 24..
- */
 @Service
 public class TestServiceImpl implements TestService {
+    private final Logger logger = LoggerFactory.getLogger(TestServiceImpl.class);
     
     @Autowired
     private EntityManager entityManager;
@@ -30,7 +27,7 @@ public class TestServiceImpl implements TestService {
     @Transactional
     public void testJPA() {
         try {
-            System.out.println("START JPA TEST");
+            logger.debug("START JPA TEST");
 //            entityManager.getTransaction().begin();
 
 //            Profile profile = new Profile();
@@ -57,7 +54,7 @@ public class TestServiceImpl implements TestService {
 //            entityManager.flush();
 //            entityManager.getTransaction().commit();
 //            entityManager.close();
-            System.out.println("FINISH JPA TEST");
+            logger.debug("FINISH JPA TEST");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -69,30 +66,36 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    @Async
     public void print(int count) {
-        System.out.println("INNER START");
+        logger.debug("INNER START");
         printThead(count);
-//        asyncDefault();
-        System.out.println("INNER END");
+        logger.debug("INNER END");
     }
     
-    @Async
-    public void asyncDefault() {
-        try {
-            TimeUnit.SECONDS.sleep(2);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    @Override
+    @Async("simpleAsyncTaskExecutor")
+    public void asyncPrint(int count) {
+        logger.debug("simpleAsyncTaskExecutor print START");
+        for (int i=1; i <= count; i++) {
+            logger.debug("PRINT: {}", i);
+            if (i == 5) {
+                throw new RuntimeException("ERROR!!!");
+            }
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        System.out.println("Default Executor name: " + Thread.currentThread().getName());
-        throw new RuntimeException("asyncDefault");
+        logger.debug("simpleAsyncTaskExecutor print END");
     }
     
-//    @Async
+    // async가 정상동작하지 않음!
+    @Async
     public void printThead(int count) {
         try {
             for (int i=0; i<count; i++) {
-                System.out.println(String.format("Count: %s", i));
+                logger.debug(String.format("Count: %s", i));
                 TimeUnit.SECONDS.sleep(1);
             }
         } catch (InterruptedException e) {

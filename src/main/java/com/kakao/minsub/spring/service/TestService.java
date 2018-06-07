@@ -13,5 +13,6 @@ public interface TestService {
 
     int getInt(int count);
     void print(int count);
+    void asyncPrint(int count);
     void testJPA();
 }

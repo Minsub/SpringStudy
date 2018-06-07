@@ -34,6 +34,7 @@ public class JerseyConfig extends ResourceConfig {
         register(RestController.class);
         register(TestController.class);
         register(UserController.class);
+        register(AsyncController.class);
 
         register(FreemarkerMvcFeature.class);
         register(RolesAllowedDynamicFeature.class);
