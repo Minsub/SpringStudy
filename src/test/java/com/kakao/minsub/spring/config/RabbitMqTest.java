@@ -11,6 +11,8 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
@@ -48,12 +50,19 @@ public class RabbitMqTest {
         factory.setUsername("rabbitmq");
         factory.setPassword("wlalstjq1");
         Connection connection = factory.newConnection();
-        Channel channel = connection.createChannel();
+        final Channel channel = connection.createChannel();
     
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-        String message = "Hello World!";
-        channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
-        logger.info(" [x] Sent '" + message + "'");
+        
+        IntStream.range(1, 10).forEach(value -> {
+            try {
+                String message = "Hello World - " + value;
+                channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
+                logger.info("SENT: {}", message );
+            } catch (Exception e){
+                logger.error("ERROR SEND MESSAGE", e);
+            }
+        });
     
         channel.close();
         connection.close();
@@ -74,15 +83,38 @@ public class RabbitMqTest {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
                 String message = new String(body, "UTF-8");
-                logger.info("Consumer message: {}" ,message);
+                logger.info("[{}] Consumer message: {}" , Thread.currentThread().getName() ,message);
             }
         };
     
         channel.basicConsume(QUEUE_NAME, true, consumer);
         
-        TimeUnit.SECONDS.sleep(20);
+        TimeUnit.SECONDS.sleep(60);
         
         channel.close();
         connection.close();
+    }
+    
+    @Test
+    public void rawConsumerBroadcastTest() throws Exception {
+        Executor executor = Executors.newFixedThreadPool(3);
+        Runnable job = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    RabbitMqTest test = new RabbitMqTest();
+                    test.rawConsumerTest();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        
+        
+        executor.execute(job);
+        executor.execute(job);
+    
+    
+        TimeUnit.SECONDS.sleep(120);
     }
 }
