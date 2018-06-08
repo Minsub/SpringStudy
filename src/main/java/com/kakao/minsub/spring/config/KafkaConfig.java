@@ -5,10 +5,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.kakao.minsub.spring.config.serialize.ProfileSerializer;
-import com.kakao.minsub.spring.model.Profile;
+import com.kakao.minsub.spring.client.KafkaProducerClient;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -78,5 +76,10 @@ public class KafkaConfig {
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                 .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
                 .registerModule(module);
+    }
+    
+    @Bean
+    public KafkaProducerClient kafkaProfileClient() {
+        return new KafkaProducerClient(kafkaProducer(), kafkaJacksonObjectMapper(), topic);
     }
 }

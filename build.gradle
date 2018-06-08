@@ -55,6 +55,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-tomcat')
 	compile('org.springframework.boot:spring-boot-starter-cache')
 	compile('org.springframework.boot:spring-boot-starter-security')
+	compile('org.springframework.boot:spring-boot-starter-amqp')
 	
 	compile('org.springframework.boot:spring-boot-devtools')
 	compile('org.glassfish.jersey.ext:jersey-mvc-freemarker:2.24')

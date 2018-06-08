@@ -13,6 +13,7 @@ public class ProfileSerializer extends ResponseMapSerializer<Profile> {
         map.put("id", profile.getId());
         map.put("name", profile.getName());
         map.put("searchId", profile.getSearchId());
+        map.put("serialize_test", true);
         return map;
     }
 }

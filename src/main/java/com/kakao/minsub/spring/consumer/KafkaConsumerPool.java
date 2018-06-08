@@ -12,8 +12,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Component
-public class ConsumerPool {
-    Logger logger = LoggerFactory.getLogger(ConsumerPool.class);
+public class KafkaConsumerPool {
+    Logger logger = LoggerFactory.getLogger(KafkaConsumerPool.class);
     
     @Resource(name="kafkaConsumerProp")
     private Properties kafkaConsumerProp;
@@ -31,7 +31,7 @@ public class ConsumerPool {
         if (enable) {
             logger.info("startConsumer");
             this.executorService = Executors.newFixedThreadPool(3);
-            executorService.submit(new ProfileConsumer(topic, kafkaConsumerProp));
+            executorService.submit(new KafkaProfileConsumer(topic, kafkaConsumerProp));
         }
     }
 }

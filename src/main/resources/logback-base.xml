@@ -55,5 +55,6 @@
 
 	<logger name="com.zaxxer.hikari.pool" level="INFO"/>
 	<logger name="org.apache.kafka.clients" level="INFO"/>
+	<logger name="org.springframework.amqp.rabbit" level="INFO"/>
 
 </included>

@@ -8,13 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Properties;
 
-public class ProfileConsumer implements Runnable {
-    Logger logger = LoggerFactory.getLogger(ProfileConsumer.class);
+public class KafkaProfileConsumer implements Runnable {
+    Logger logger = LoggerFactory.getLogger(KafkaProfileConsumer.class);
     
     private String topic;
     private Properties kafkaConsumerProp;
     
-    public ProfileConsumer(String topic, Properties kafkaConsumerProp) {
+    public KafkaProfileConsumer(String topic, Properties kafkaConsumerProp) {
         this.topic = topic;
         this.kafkaConsumerProp = kafkaConsumerProp;
     }
