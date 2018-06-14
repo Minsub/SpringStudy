@@ -39,8 +39,7 @@
          }
        });
 
-
-        function call() {
+       function call() {
             var url = 'https://dapi.kakao.com/v2/local/search/keyword.json?query=%EC%B9%B4%EC%B9%B4%EC%98%A4';
             $.ajax({
                 url: url,

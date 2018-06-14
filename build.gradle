@@ -7,6 +7,7 @@ buildscript {
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath "se.transmode.gradle:gradle-docker:1.2"
 	}
 }
 
@@ -16,8 +17,8 @@ plugins {
 
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'docker'
 
-version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
@@ -28,9 +29,8 @@ ext {
 	git = org.ajoberstar.grgit.Grgit.open(project.rootDir)
 }
 
-
 jar {
-	baseName = 'springStudy'
+	baseName = 'spring-study'
 	version = "0.0.1.${git.head().abbreviatedId}-SNAPSHOT"
 	enabled = true
 }
@@ -71,4 +71,34 @@ dependencies {
 	compile('mysql:mysql-connector-java')
 	compileOnly('org.projectlombok:lombok')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+//docker {
+//	useApi true
+//	hostUrl 'http://myserver:4243'
+//	apiUsername 'user'
+//	apiPassword 'password'
+//	apiEmail 'me@mycompany.com'
+//}
+
+group = 'jiminsub'
+
+def getTagVersion() {
+	return project.findProperty('tagVersion') ?: 'latest'
+}
+
+// docker login -u user -p password
+// gradle buildDocker -x test
+// docker run -it -d -p 8888:8080 jiminsub/spring-study /bin/bash --name spring-study
+task buildDocker(type: Docker, dependsOn: build) {
+	push = true
+	applicationName = jar.baseName
+	tagVersion = getTagVersion()
+	dockerfile = file('src/main/docker/Dockerfile')
+	doFirst {
+		copy {
+			from jar
+			into stageDir
+		}
+	}
 }

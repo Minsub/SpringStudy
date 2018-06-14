@@ -10,6 +10,7 @@ import com.google.common.collect.Maps;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Test;
 
+import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -23,23 +24,7 @@ public class JustTest {
     
     @Test
     public void test22() throws Exception {
-        Map<String, Object> input = Maps.newHashMap();
-        input.put("appleBanana", 1);
-        input.put("addressName", "Hello");
+        
     
-        ObjectMapper mapper = new ObjectMapper()
-//                .setSerializationInclusion(JsonInclude.Include.NON_NULL)
-//                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-//                .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
-                ;
-        
-        String output = mapper.writeValueAsString(input);
-        System.out.println(output);
-    
-        System.out.println(mapper.readValue(output, Map.class));
-        
-        
-        String s = "kafka";
-        System.out.println(Integer.valueOf(s));
     }
 }
