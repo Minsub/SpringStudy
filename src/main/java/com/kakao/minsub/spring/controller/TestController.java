@@ -1,5 +1,6 @@
 package com.kakao.minsub.spring.controller;
 
+import com.google.common.collect.Maps;
 import com.kakao.minsub.spring.service.TestService;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
@@ -26,6 +27,14 @@ public class TestController {
     public Map jpa() {
         testService.testJPA();
         return Collections.emptyMap();
+    }
+    
+    @GET
+    @Path("/version")
+    public Map version() {
+        Map<String, Object> result = Maps.newHashMap();
+        result.put("version", 1);
+        return result;
     }
 
 }
