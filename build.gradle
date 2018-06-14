@@ -39,9 +39,9 @@ task hello << {
 	println "${System.properties['spring.profiles.active']}"
 }
 
-//configurations {
-//	compile.exclude module: "spring-boot-starter-tomcat"
-//}
+configurations {
+	compile.exclude module: "spring-boot-starter-tomcat"
+}
 
 dependencies {
 	compile 'org.springframework.boot:spring-boot-starter'
@@ -52,7 +52,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-redis')
 	compile('org.springframework.boot:spring-boot-starter-jdbc')
 	compile('org.springframework.boot:spring-boot-starter-web')
-	compile('org.springframework.boot:spring-boot-starter-tomcat')
+	compile('org.springframework.boot:spring-boot-starter-undertow')
 	compile('org.springframework.boot:spring-boot-starter-cache')
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.boot:spring-boot-starter-amqp')
@@ -88,8 +88,9 @@ def getTagVersion() {
 }
 
 // docker login -u user -p password
-// gradle buildDocker -x test
-// docker run -it -d -p 8888:8080 jiminsub/spring-study /bin/bash --name spring-study
+// docker pull jiminsub/spring-study
+// docker stop spring-study || true && docker rm spring-study || true
+// docker run -it -d -p 8080:8080 --name spring-study -v /Users/macmini/app/docker/spring-study/logs:/logs jiminsub/spring-study /bin/bash
 task buildDocker(type: Docker, dependsOn: build) {
 	push = true
 	applicationName = jar.baseName

@@ -1,6 +1,7 @@
 package com.kakao.minsub.spring.controller;
 
 import com.google.common.collect.Maps;
+import com.kakao.minsub.spring.sample.BeanLifeCycle;
 import com.kakao.minsub.spring.service.TestService;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
@@ -22,6 +23,9 @@ public class TestController {
     @Autowired
     private TestService testService;
     
+    @Autowired
+    private BeanLifeCycle beanLifeCycle;
+    
     @GET
     @Path("/jpa")
     public Map jpa() {
@@ -34,6 +38,9 @@ public class TestController {
     public Map version() {
         Map<String, Object> result = Maps.newHashMap();
         result.put("version", 1);
+    
+        beanLifeCycle.print();
+        
         return result;
     }
 
