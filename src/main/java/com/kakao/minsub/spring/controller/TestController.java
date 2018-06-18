@@ -13,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.Collections;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Path("/test")
 @Api("Test")
@@ -48,6 +49,16 @@ public class TestController {
     @Path("empty")
     public void empty() {
     
+    }
+    
+    @GET
+    @Path("gracefull")
+    public void gracefull() throws Exception {
+        logger.info("START graceful test");
+    
+        TimeUnit.SECONDS.sleep(5);
+        
+        logger.info("END graceful test");
     }
 
 }
