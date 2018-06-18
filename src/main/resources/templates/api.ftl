@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -9,35 +9,69 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
-    <h2>devTools</h2>
-    <h2>NEW VERSION</h2>
-    <h2>NEW VERSION</h2>
-    <h2>NEW VERSION</h2>
-    <h3>Test</h3>
+    <h2>Kakao SDK</h2>
     <a id="kakao-login-btn"></a>
-    <a href="http://developers.kakao.com/logout"></a>
     <br><br>
-    <input type="text"/>
-     <input type="button" value="검색" onClick="call()" />
-    
+    <h3>STORY SHARE TEST</h3>
+    Kakao.Story.createShareButton: <a id="kakaostory-share-button"></a><br/>
+    Kakao.Story.share: <button onclick="share()">SHARE</button><br/>
+    Kakao.Story.open: <button onclick="open()">OPEN</button><br/>
 
-    
+    <h3>LOCAL KEYWORD SEARCH TEST</h3>
+    <input type="text"/>
+    <input type="button" value="검색" onClick="call()" />
+
     <p>END</p>
 
     <script type="text/javascript">
 
        // 사용할 앱의 JavaScript 키를 설정해 주세요.
-       Kakao.init('5e4d6077b3f89b6ed48397b0c0bce7eb');
+//       Kakao.init('5e4d6077b3f89b6ed48397b0c0bce7eb');
+
+//       Kakao.init('4470e27b99b19e287d3601d5cc5b7f90');
+       Kakao.init('4e27b99b19e287d3601d5cc5b7f90');
+
        // 카카오 로그인 버튼을 생성합니다.
        Kakao.Auth.createLoginButton({
-         container: '#kakao-login-btn',
-         success: function(authObj) {
-           alert(JSON.stringify(authObj));
-         },
-         fail: function(err) {
-            alert(JSON.stringify(err));
-         }
+           container: '#kakao-login-btn',
+           success: function(authObj) {
+               // 로그인 성공시, API를 호출합니다.
+               Kakao.API.request({
+                   url: '/v1/user/me',
+                   success: function(res) {
+                       alert(JSON.stringify(res));
+                   },
+                   fail: function(error) {
+                       alert(JSON.stringify(error));
+                   }
+               });
+           },
+           fail: function(err) {
+               alert(JSON.stringify(err));
+           }
        });
+
+       Kakao.Story.createShareButton({
+           container: '#kakaostory-share-button',
+           url: 'https://daum.net',
+           text: '테스트 share :)'
+       });
+
+       function open() {
+           Kakao.Story.open({
+               url: 'http://localhost:8080',
+               text: '공유할 텍스트입니다 테스트',
+           });
+       }
+
+       function share() {
+           Kakao.Story.share({
+               url: 'https://developers.kakao.com',
+               text: '카카오 개발자 사이트로 놀러오세요! #개발자 #카카오 :)'
+           });
+       }
+
+
 
        function call() {
             var url = 'https://dapi.kakao.com/v2/local/search/keyword.json?query=%EC%B9%B4%EC%B9%B4%EC%98%A4';

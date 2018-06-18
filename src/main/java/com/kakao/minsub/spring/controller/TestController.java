@@ -43,5 +43,11 @@ public class TestController {
         
         return result;
     }
+    
+    @GET
+    @Path("empty")
+    public void empty() {
+    
+    }
 
 }
