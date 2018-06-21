@@ -56,7 +56,9 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-cache')
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.boot:spring-boot-starter-amqp')
-	
+
+	compile('org.glassfish.jersey.media:jersey-media-multipart:2.23')
+	compile('commons-io:commons-io:2.5')
 	compile('org.springframework.boot:spring-boot-devtools')
 	compile('org.glassfish.jersey.ext:jersey-mvc-freemarker:2.24')
 	compile('mysql:mysql-connector-java:5.1.38')

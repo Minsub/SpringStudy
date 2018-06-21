@@ -84,8 +84,16 @@ public class PostController {
     @Path("/all")
     public Page<Post> showPageable(@QueryParam("size") @DefaultValue("3") int size,
                                    @QueryParam("page") @DefaultValue("1") int page) {
-        final Pageable pageable = new PageRequest(page , size, new Sort(Sort.Direction.DESC, "id"));
+        final Pageable pageable = new PageRequest(page - 1, size, new Sort(Sort.Direction.DESC, "id"));
         return postService.findAll(pageable);
+    }
+    
+    @GET
+    @Path("/all/native")
+    public Page<Post> showPageableNative(@QueryParam("size") @DefaultValue("3") int size, @QueryParam("page") @DefaultValue("1") int page) {
+        final Pageable pageable = new PageRequest(page - 1, size, new Sort(Sort.Direction.DESC, "id"));
+//        final Pageable pageable = new PageRequest(page - 1, size);
+        return postService.findAllNative(pageable);
     }
     
     @GET

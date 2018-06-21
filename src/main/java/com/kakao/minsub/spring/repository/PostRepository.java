@@ -7,7 +7,9 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
@@ -24,11 +26,18 @@ public interface PostRepository extends CrudRepository<Post, Integer> {
     
     Post findOneByProfileId(Integer profileId);
 
-    @Query(value = "select * from posts where is_show=TRUE ", nativeQuery=true)
+    @Query(value = "select * from posts USE INDEX(idx_profile_id) where is_show=TRUE ", nativeQuery=true)
     @Transactional
     Collection<Post> findAvailablePost();
 
     Page<Post> findAll(Pageable pageable);
+    
+    Page<Post> findAllByProfileId(int profileId, Pageable pageable);
+    
+    @Query(value = "select * from posts as p USE INDEX(idx_profile_id) where is_show=TRUE ORDER BY ID DESC LIMIT :offset, :size", nativeQuery=true)
+    List<Post> findAllOrderByIdDesc(@Param("offset") int offset, @Param("size") int size);
+    
+    long countByIsShowIsTrue();
     
     @Cacheable(key="'all'")
     List<Post> findAll();

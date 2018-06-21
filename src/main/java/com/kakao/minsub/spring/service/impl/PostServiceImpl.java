@@ -7,13 +7,17 @@ import com.kakao.minsub.spring.util.TimeControll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -54,6 +58,13 @@ public class PostServiceImpl implements PostService {
     @Override
     public Page<Post> findAll(Pageable pageable) {
         return postRepository.findAll(pageable);
+    }
+    
+    @Override
+    public Page<Post> findAllNative(Pageable pageable) {
+        List<Post> posts = postRepository.findAllOrderByIdDesc(pageable.getOffset(), pageable.getPageSize());
+        long totalCount = postRepository.countByIsShowIsTrue();
+        return new PageImpl<>(posts, pageable, totalCount);
     }
     
     @Override

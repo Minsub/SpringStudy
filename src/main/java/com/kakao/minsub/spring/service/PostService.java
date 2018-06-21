@@ -24,6 +24,8 @@ public interface PostService {
 
     Page<Post> findAll(Pageable pageable);
     
+    Page<Post> findAllNative(Pageable pageable);
+    
     List<Post> findAll();
     
     void refreshCache(int id);
