@@ -3,6 +3,7 @@ package com.kakao.minsub.spring.config;
 import com.kakao.minsub.spring.config.jersey.filter.ManagerFilter;
 import com.kakao.minsub.spring.config.jersey.filter.RequestLogFilter;
 import com.kakao.minsub.spring.config.jersey.mapper.AccessDeniedExceptionMapper;
+import com.kakao.minsub.spring.config.jersey.mapper.BadRequestExceptionMapper;
 import com.kakao.minsub.spring.config.jersey.mapper.ConstraintValidationExceptionMapper;
 import com.kakao.minsub.spring.config.jersey.mapper.DefaultExceptionMapper;
 import com.kakao.minsub.spring.controller.*;
@@ -47,6 +48,7 @@ public class JerseyConfig extends ResourceConfig {
         register(ConstraintValidationExceptionMapper.class);
         register(AccessDeniedExceptionMapper.class);
         register(DefaultExceptionMapper.class);
+        register(BadRequestExceptionMapper.class);
     }
     
     private void registerFilters() {
