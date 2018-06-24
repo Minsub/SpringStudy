@@ -1,5 +1,9 @@
 server:
   port: ${application.port:8080}
+#  ssl:
+#    key-alias: spring-study
+#    key-store: classpath:keystore.jks
+#    key-store-password: wlalstjq1
 
 spring:
   pidfile: ./logs/application.pid
