@@ -16,14 +16,6 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
-# CacheConfig.java로 대체
-#  cache:
-#    type: redis
-#  redis:
-#    host: jiminsub.iptime.org
-#    port: 6379
-#    password: wlalstjq1
-
 
 
 context:

@@ -37,10 +37,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/page/index").permitAll()
                 .antMatchers(HttpMethod.GET, "/page/**").authenticated()
                 .antMatchers("/user/**").permitAll()
-                
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic();
+                .httpBasic()
+        ;
     }
 
     @Override
@@ -63,6 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .antMatchers("/static/**")
                 .antMatchers("/resources/**")
-                .antMatchers("/swagger-ui/**").anyRequest();
+                .antMatchers("/swagger-ui/**")
+                .anyRequest()
+        ;
     }
 }
