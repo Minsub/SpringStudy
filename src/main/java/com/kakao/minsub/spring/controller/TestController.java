@@ -3,12 +3,14 @@ package com.kakao.minsub.spring.controller;
 import com.google.common.collect.Maps;
 import com.kakao.minsub.spring.sample.BeanLifeCycle;
 import com.kakao.minsub.spring.service.TestService;
+import com.kakao.minsub.spring.type.TestType;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.Collections;
@@ -46,13 +48,13 @@ public class TestController {
     }
     
     @GET
-    @Path("empty")
+    @Path("/empty")
     public void empty() {
     
     }
     
     @GET
-    @Path("gracefull")
+    @Path("/gracefull")
     public void gracefull() throws Exception {
         logger.info("START graceful test");
     
@@ -60,5 +62,10 @@ public class TestController {
         
         logger.info("END graceful test");
     }
-
+    
+    @GET
+    @Path("/pathparm/{type}")
+    public void gracefull(@PathParam("type") TestType type) throws Exception {
+        logger.info("type: {}", type);
+    }
 }
