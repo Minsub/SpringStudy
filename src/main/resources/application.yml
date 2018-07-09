@@ -15,11 +15,13 @@ spring:
       hibernate:
         globally_quoted_identifiers: true
   jersey:
+    application-path: /
     type: filter
   http:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+
 # CacheConfig.java로 대체
 #  cache:
 #    type: redis
@@ -29,7 +31,10 @@ spring:
 #    password: wlalstjq1
 
 
-
 context:
   listener:
     classes: org.springframework.boot.system.ApplicationPidFileWriter
+
+management:
+  security:
+    enabled: false

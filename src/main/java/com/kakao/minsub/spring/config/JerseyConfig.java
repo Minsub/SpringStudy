@@ -2,10 +2,7 @@ package com.kakao.minsub.spring.config;
 
 import com.kakao.minsub.spring.config.jersey.filter.ManagerFilter;
 import com.kakao.minsub.spring.config.jersey.filter.RequestLogFilter;
-import com.kakao.minsub.spring.config.jersey.mapper.AccessDeniedExceptionMapper;
-import com.kakao.minsub.spring.config.jersey.mapper.BadRequestExceptionMapper;
-import com.kakao.minsub.spring.config.jersey.mapper.ConstraintValidationExceptionMapper;
-import com.kakao.minsub.spring.config.jersey.mapper.DefaultExceptionMapper;
+import com.kakao.minsub.spring.config.jersey.mapper.*;
 import com.kakao.minsub.spring.controller.*;
 import io.swagger.jaxrs.config.BeanConfig;
 import io.swagger.jaxrs.listing.ApiListingResource;
@@ -22,6 +19,7 @@ public class JerseyConfig extends ResourceConfig {
 
     public JerseyConfig() {
         property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "/(static|public)/.*");
+        property(ServletProperties.FILTER_FORWARD_ON_404, true);
         registerEndpoints();
         registerExceptionMappers();
         registerFilters();
@@ -47,8 +45,9 @@ public class JerseyConfig extends ResourceConfig {
     private void registerExceptionMappers() {
         register(ConstraintValidationExceptionMapper.class);
         register(AccessDeniedExceptionMapper.class);
-        register(DefaultExceptionMapper.class);
         register(BadRequestExceptionMapper.class);
+        register(NotFoundExceptionMapper.class);
+        register(DefaultExceptionMapper.class);
     }
     
     private void registerFilters() {

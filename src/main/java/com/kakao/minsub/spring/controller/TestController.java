@@ -68,4 +68,10 @@ public class TestController {
     public void gracefull(@PathParam("type") TestType type) throws Exception {
         logger.info("type: {}", type);
     }
+    
+    @GET
+    @Path("/greeting")
+    public String greeting() throws Exception {
+        return testService.getGreeting();
+    }
 }

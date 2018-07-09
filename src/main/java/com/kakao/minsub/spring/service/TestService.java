@@ -15,4 +15,6 @@ public interface TestService {
     void print(int count);
     void asyncPrint(int count);
     void testJPA();
+    
+    String getGreeting();
 }

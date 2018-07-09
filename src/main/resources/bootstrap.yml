@@ -1,0 +1,7 @@
+spring:
+  cloud:
+    config:
+      name: account-service
+      uri: http://localhost:8888
+
+

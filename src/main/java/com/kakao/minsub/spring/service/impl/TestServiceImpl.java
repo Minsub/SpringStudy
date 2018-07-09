@@ -2,10 +2,14 @@ package com.kakao.minsub.spring.service.impl;
 
 import com.kakao.minsub.spring.model.Profile;
 import com.kakao.minsub.spring.repository.ProfileRepository;
+import com.kakao.minsub.spring.sample.CloudConfigs;
 import com.kakao.minsub.spring.service.TestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +18,8 @@ import javax.persistence.EntityManager;
 import java.util.concurrent.TimeUnit;
 
 @Service
+@RefreshScope
+@EnableConfigurationProperties(CloudConfigs.class)
 public class TestServiceImpl implements TestService {
     private final Logger logger = LoggerFactory.getLogger(TestServiceImpl.class);
     
@@ -22,6 +28,12 @@ public class TestServiceImpl implements TestService {
     
     @Autowired
     private ProfileRepository profileRepository;
+    
+    @Value("${cloud.greeting:Default Greeting}")
+    private String greeting;
+    
+    @Autowired
+    private CloudConfigs cloudConfigs;
     
     @Override
     @Transactional
@@ -101,5 +113,11 @@ public class TestServiceImpl implements TestService {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+    
+    @Override
+    public String getGreeting() {
+        return String.format("static Value: %s, bean Binding: %s", greeting, cloudConfigs.getGreeting());
+//        return String.format("static Value: %s", greeting);
     }
 }
