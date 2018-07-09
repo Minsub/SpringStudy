@@ -173,4 +173,17 @@ public interface PostRepository extends CrudRepository<Post, Integer> {
 - TODO
 
 
+### Spring cloud
+- config-server를 단독으로 띄어야함
+- @EnableConfigServer를 추가하고 application.yml에 git을 추가
+```yml
+server:
+  port: 8888
 
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/Minsub/SpringStudy-config.git
+```
