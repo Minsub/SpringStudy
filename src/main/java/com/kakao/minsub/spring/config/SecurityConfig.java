@@ -1,6 +1,8 @@
 package com.kakao.minsub.spring.config;
 
 
+import com.kakao.minsub.spring.config.security.UserAuthenticatedProcessingFilter;
+import com.kakao.minsub.spring.config.security.UserAuthenticationProvider;
 import com.kakao.minsub.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -14,9 +16,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 
-/**
- * Created by kakao on 2017. 7. 25..
- */
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(jsr250Enabled = true, proxyTargetClass = true)
 @Configuration
@@ -25,6 +24,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private UserAuthenticationProvider userAuthenticationProvider;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -39,14 +41,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
+                .addFilter(new UserAuthenticatedProcessingFilter(authenticationManager()))
                 .httpBasic()
         ;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService)
-                .passwordEncoder(userService.passwordEncoder());
+        auth.authenticationProvider(userAuthenticationProvider);
+//        auth.userDetailsService(userService)
+//                .passwordEncoder(userService.passwordEncoder());
+
 
 //        auth.inMemoryAuthentication()
 //                .withUser("kakao")
