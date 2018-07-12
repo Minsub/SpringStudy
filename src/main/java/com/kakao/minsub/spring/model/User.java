@@ -31,6 +31,8 @@ public class User implements UserDetails, Serializable {
             foreignKey = @ForeignKey(name="none",value = ConstraintMode.NO_CONSTRAINT))
     public Collection<Authority> authorities;
 
+    @Transient
+    public String accessKey;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
