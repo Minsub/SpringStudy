@@ -18,6 +18,8 @@ public class RestTemplateTest {
 
     private RestTemplate restTemplate;
     
+    
+    
     @Before
     public void before() {
         restTemplate = new RestTemplate();
