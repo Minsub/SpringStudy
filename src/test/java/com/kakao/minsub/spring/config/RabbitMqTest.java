@@ -31,10 +31,7 @@ public class RabbitMqTest {
     
         IntStream.range(1, 10).forEach(value -> {
             try {
-                Profile p = new Profile();
-                p.setId(1);
-                p.setName("test name");
-                rabbitTemplate.convertAndSend(p);
+                rabbitTemplate.convertAndSend(Profile.builder().name("gray.ji").searchId("gray.jiiia").build());
                 logger.info("SENT MESSAGE: {}", value);
                 TimeUnit.SECONDS.sleep(1);
             } catch (Exception e) {

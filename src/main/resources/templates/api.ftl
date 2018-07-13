@@ -11,6 +11,11 @@
 <body>
     <h2>Kakao SDK</h2>
     <a id="kakao-login-btn"></a>
+    <div id="kakao-pf-btn"></div>
+    <a href="javascript:void addPlusFriend()">
+        <img src="https://developers.kakao.com/assets/img/about/logos/plusfriend/friendadd_small_yellow_rect.png"/>
+    </a>
+    <div id="kakao-chat-btn"></div>
     <br><br>
     <h3>STORY SHARE TEST</h3>
     Kakao.Story.createShareButton: <a id="kakaostory-share-button"></a><br/>
@@ -24,12 +29,12 @@
     <p>END</p>
 
     <script type="text/javascript">
+       //<![CDATA[
 
-       // 사용할 앱의 JavaScript 키를 설정해 주세요.
 //       Kakao.init('5e4d6077b3f89b6ed48397b0c0bce7eb');
 
-//       Kakao.init('4470e27b99b19e287d3601d5cc5b7f90');
-       Kakao.init('4e27b99b19e287d3601d5cc5b7f90');
+       Kakao.init('4470e27b99b19e287d3601d5cc5b7f90');
+//       Kakao.init('4e27b99b19e287d3601d5cc5b7f90');
 
        // 카카오 로그인 버튼을 생성합니다.
        Kakao.Auth.createLoginButton({
@@ -49,6 +54,22 @@
            fail: function(err) {
                alert(JSON.stringify(err));
            }
+       });
+
+       Kakao.PlusFriend.createAddFriendButton({
+           container: '#kakao-pf-btn',
+           plusFriendId: '_xjXcmM'
+       });
+
+       function addPlusFriend() {
+           Kakao.PlusFriend.addFriend({
+               plusFriendId: '_xjXcmM' // 플러스친구 홈 URL에 명시된 id로 설정합니다.
+           });
+       }
+
+       Kakao.PlusFriend.createChatButton({
+           container: '#kakao-chat-btn',
+           plusFriendId: '_xcLqmC'
        });
 
        Kakao.Story.createShareButton({
@@ -87,6 +108,7 @@
                 }
             });    
         }
+    //]]>
     </script>
 </body>
 </html>

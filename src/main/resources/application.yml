@@ -36,5 +36,11 @@ context:
     classes: org.springframework.boot.system.ApplicationPidFileWriter
 
 management:
+  context-path: /
+  port: 8081
   security:
     enabled: false
+
+endpoints:
+  beans:
+    sensitive: false

@@ -4,7 +4,9 @@ import com.kakao.minsub.spring.config.validator.group.First;
 import com.kakao.minsub.spring.config.validator.group.Second;
 import com.kakao.minsub.spring.config.validator.group.Third;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.validator.constraints.Email;
@@ -20,6 +22,7 @@ import java.util.List;
 
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "profiles")
 public class Profile implements Serializable {
@@ -48,6 +51,12 @@ public class Profile implements Serializable {
             foreignKey = @ForeignKey(name="none",value = ConstraintMode.NO_CONSTRAINT))
     @Transient
     private Collection<Post> posts;
+    
+    @Builder
+    public Profile(String name, String searchId) {
+        this.name = name;
+        this.searchId = searchId;
+    }
     
     @Override
     public String toString() {
