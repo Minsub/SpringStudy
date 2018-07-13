@@ -1,22 +1,34 @@
 package com.kakao.minsub.spring.controller;
 
-
-import io.swagger.annotations.Api;
+import com.google.common.collect.Maps;
 import org.glassfish.jersey.server.mvc.Viewable;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.annotation.security.RolesAllowed;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-
-/**
- * Created by kakao on 2017. 7. 27..
- */
 
 @Path("/page")
 @Produces(MediaType.TEXT_HTML)
 public class HomeController {
+    
+    @GET
+    @Path("/login")
+    public Viewable login() {
+        return new Viewable("/templates/login.ftl");
+    }
+    
+    @POST
+    @Path("/login")
+    public Viewable login(@Context HttpServletRequest request, @Context HttpServletResponse response) {
+       return new Viewable("/templates/index.ftl");
+    }
 
     @GET
     @Path("/index")
@@ -38,8 +50,8 @@ public class HomeController {
 
     @GET
     @Path("/test2")
-    public Viewable test2() {
-        return new Viewable("/templates/api.ftl");
+    public RedirectView test2() {
+        return new RedirectView("http://localhost:8080/page/index");
     }
 
     @GET
@@ -55,7 +67,6 @@ public class HomeController {
         return "Admin Only Page";
     }
 
-
     @GET
     @Path("/normal")
     @RolesAllowed({"ROLE_NORMAL"})
@@ -63,4 +74,5 @@ public class HomeController {
         return "Normal Only Page";
     }
 
+    
 }
