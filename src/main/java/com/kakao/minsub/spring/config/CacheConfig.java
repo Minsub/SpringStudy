@@ -38,7 +38,7 @@ public class CacheConfig extends AbstractCachingConfiguration implements Initial
         LettuceConnectionFactory factory = new LettuceConnectionFactory(host,port);
         factory.setDatabase(database);
         factory.setPassword(password);
-        factory.setTimeout(timeout);
+//        factory.setTimeout(timeout);
 //		factory.setShareNativeConnection(false);
         factory.afterPropertiesSet();
         factory.initConnection();
