@@ -31,7 +31,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public Profile findOne(int profileId) {
-        return profileRepository.findOne(profileId).orElseThrow(RuntimeException::new);
+        return profileRepository.findOneById(profileId).orElseThrow(RuntimeException::new);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class ProfileServiceImpl implements ProfileService {
     
     @Override
     public void delete(Integer id) {
-        profileRepository.delete(id);
+        profileRepository.deleteById(id);
     }
     
     private void validateProfile(Profile profile) {

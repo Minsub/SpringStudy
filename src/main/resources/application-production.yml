@@ -10,6 +10,3 @@ spring:
   jersey:
     type: filter
 
-context:
-  listener:
-    classes: org.springframework.boot.system.ApplicationPidFileWriter

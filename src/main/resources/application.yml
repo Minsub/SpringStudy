@@ -6,7 +6,7 @@ server:
 #    key-store-password: wlalstjq1
 
 spring:
-  pidfile: ./logs/application.pid
+  pid.file: ./logs/application.pid
   jpa:
     hibernate.ddl-auto: update
     show-sql: true
@@ -33,11 +33,11 @@ spring:
 
 context:
   listener:
-    classes: org.springframework.boot.system.ApplicationPidFileWriter
+    classes: org.springframework.boot.context.ApplicationPidFileWriter,org.springframework.boot.web.context.WebServerPortFileWriter
 
 management:
   context-path: /
-  port: 8081
+  server.port: 8081
   security:
     enabled: false
 

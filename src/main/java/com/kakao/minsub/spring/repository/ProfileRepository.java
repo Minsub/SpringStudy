@@ -8,11 +8,11 @@ import java.util.Optional;
 
 public interface ProfileRepository extends Repository<Profile, Integer> {
 
-    Optional<Profile> findOne(Integer profileId);
+    Optional<Profile> findOneById(Integer profileId);
     
     Profile save(Profile profile);
     
-    void delete(Integer profileId);
+    void deleteById(Integer profileId);
     
     List<Profile> findAll();
 }

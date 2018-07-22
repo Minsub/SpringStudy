@@ -1,5 +1,6 @@
 package com.kakao.minsub.spring.config;
 
+import com.google.common.collect.Maps;
 import lombok.Data;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -9,11 +10,15 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.redis.cache.CacheKeyPrefix;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.Assert;
+
+import java.time.Duration;
 
 @Configuration
 @EnableCaching
@@ -30,13 +35,13 @@ public class CacheConfig extends AbstractCachingConfiguration implements Initial
     
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-        JedisConnectionFactory factory = new JedisConnectionFactory();
-        factory.setHostName(host);
-        factory.setPort(port);
-        factory.setPassword(password);
-        factory.setUsePool(true);
-        factory.setTimeout(timeout);
+        LettuceConnectionFactory factory = new LettuceConnectionFactory(host,port);
         factory.setDatabase(database);
+        factory.setPassword(password);
+        factory.setTimeout(timeout);
+//		factory.setShareNativeConnection(false);
+        factory.afterPropertiesSet();
+        factory.initConnection();
         return factory;
     }
     
@@ -49,13 +54,14 @@ public class CacheConfig extends AbstractCachingConfiguration implements Initial
     
     @Bean
     public CacheManager cacheManager() {
-        RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate());
-        cacheManager.setCachePrefix(cacheName -> String.format("spring.cache.%s",cacheName).getBytes());
-        if (defaultExpiration > 0) {
-            cacheManager.setUsePrefix(true);
-            cacheManager.setDefaultExpiration(defaultExpiration);
-        }
-        return cacheManager;
+        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
+            .computePrefixWith(key -> String.format("spring.cache.%s::", key))
+            .entryTtl(defaultExpiration > 0 ? Duration.ofSeconds(defaultExpiration) : Duration.ZERO)
+        ;
+        return RedisCacheManager.builder(redisConnectionFactory())
+                .cacheDefaults(config)
+                .transactionAware()
+                .build();
     }
     
     @Override

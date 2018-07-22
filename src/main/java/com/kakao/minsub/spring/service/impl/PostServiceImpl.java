@@ -32,7 +32,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post findOne(int id) {
-        return postRepository.findOne(id);
+        return postRepository.findOneByid(id);
     }
     
     @Override
@@ -47,7 +47,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void delete(Integer id) {
-        postRepository.delete(id);
+        postRepository.deleteById(id);
     }
 
     @Override

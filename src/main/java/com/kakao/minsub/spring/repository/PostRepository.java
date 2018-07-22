@@ -22,7 +22,7 @@ import java.util.List;
 public interface PostRepository extends CrudRepository<Post, Integer> {
     
     @Cacheable(key="#p0")
-    Post findOne(Integer id);
+    Post findOneByid(Integer id);
     
     Post findOneByProfileId(Integer profileId);
 
@@ -35,7 +35,7 @@ public interface PostRepository extends CrudRepository<Post, Integer> {
     Page<Post> findAllByProfileId(int profileId, Pageable pageable);
     
     @Query(value = "select * from posts as p USE INDEX(idx_profile_id) where is_show=TRUE ORDER BY ID DESC LIMIT :offset, :size", nativeQuery=true)
-    List<Post> findAllOrderByIdDesc(@Param("offset") int offset, @Param("size") int size);
+    List<Post> findAllOrderByIdDesc(@Param("offset") long offset, @Param("size") int size);
     
     long countByIsShowIsTrue();
     

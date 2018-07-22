@@ -12,14 +12,14 @@ import java.util.Properties;
 @PropertySource("classpath:common-production.properties")
 public class TestConfig {
 
-    @Value("${db.local_mysql.username}")
+    @Value("${db.local-mysql.username}")
     private String name;
 
-    @Value("${db.local_mysql.jdbcUrl}")
+    @Value("${db.local-mysql.jdbcUrl}")
     private String url;
 
     @Bean(name="testProps")
-    @ConfigurationProperties(prefix = "db.local_mysql")
+    @ConfigurationProperties(prefix = "db.local-mysql")
     public Properties getProperties() {
         Properties props = new Properties();
         props.setProperty("name", name);

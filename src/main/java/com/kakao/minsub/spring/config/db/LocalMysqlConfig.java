@@ -3,6 +3,7 @@ package com.kakao.minsub.spring.config.db;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateSettings;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
@@ -18,6 +19,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.util.Map;
 
 @Configuration
 @PropertySource("classpath:common-${spring.profiles.active}.properties")
@@ -32,7 +34,7 @@ public class LocalMysqlConfig {
 
     @Primary
     @Bean
-    @ConfigurationProperties(prefix = "db.local_mysql")
+    @ConfigurationProperties(prefix = "db.local-mysql")
     public HikariConfig getHikariConfig() {
         return new HikariConfig();
     }
@@ -50,7 +52,7 @@ public class LocalMysqlConfig {
                 .dataSource(getDataSource())
                 .packages("com.kakao.minsub.spring.model")
                 .persistenceUnit("localMysql")
-                .properties(jpaProperties.getHibernateProperties(getDataSource()))
+                .properties(getVendorProperties(getDataSource()))
                 .build();
     }
 
@@ -67,4 +69,7 @@ public class LocalMysqlConfig {
     }
 
 
+    private Map<String, Object> getVendorProperties(DataSource dataSource) {
+        return jpaProperties.getHibernateProperties(new HibernateSettings());
+    }
 }

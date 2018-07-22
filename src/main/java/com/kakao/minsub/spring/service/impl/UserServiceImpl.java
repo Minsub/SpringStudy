@@ -8,6 +8,7 @@ import com.kakao.minsub.spring.repository.AuthorityRepository;
 import com.kakao.minsub.spring.repository.UserRepository;
 import com.kakao.minsub.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,12 +31,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findOne(String username) {
-        return userRepository.findOne(username);
+        return userRepository.findById(username).orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findOne(username);
+        return userRepository.findById(username).orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override

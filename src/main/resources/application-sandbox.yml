@@ -17,7 +17,3 @@ spring:
       max-file-size: 10MB
       max-request-size: 10MB
 
-
-context:
-  listener:
-    classes: org.springframework.boot.system.ApplicationPidFileWriter
