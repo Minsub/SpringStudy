@@ -114,12 +114,12 @@ def getTagVersion() {
 // docker run -it -d -p 8080:8080 --name spring-study -v /Users/macmini/app/docker/spring-study/logs:/logs jiminsub/spring-study /bin/bash
 task buildDocker(type: Docker, dependsOn: build) {
 	push = true
-	applicationName = jar.baseName
+	applicationName = bootJar.baseName
 	tagVersion = getTagVersion()
 	dockerfile = file('src/main/docker/Dockerfile')
 	doFirst {
 		copy {
-			from jar
+			from bootJar
 			into stageDir
 		}
 	}
