@@ -187,3 +187,5 @@ spring:
         git:
           uri: https://github.com/Minsub/SpringStudy-config.git
 ```
+
+PR_TEST COMMIT LOG
