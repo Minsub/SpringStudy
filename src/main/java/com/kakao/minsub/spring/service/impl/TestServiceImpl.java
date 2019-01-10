@@ -51,7 +51,7 @@ public class TestServiceImpl implements TestService {
 //            System.out.println(query.getResultList());
 
             
-            Profile profile = entityManager.find(Profile.class, 56134);
+//            Profile profile = entityManager.find(Profile.class, 56134);
 //            Profile profile = profileRepository.findOne(56134);
 //            System.out.println(profile);
             
