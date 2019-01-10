@@ -38,7 +38,7 @@ public class TestServiceImpl implements TestService {
     @Transactional
     public void testJPA() {
         try {
-            logger.debug("START JPA TEST");
+            logger.debug("START JPA TEST 11");
 //            entityManager.getTransaction().begin();
 
 //            Profile profile = new Profile();
