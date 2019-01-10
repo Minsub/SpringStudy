@@ -1,6 +1,5 @@
 package com.kakao.minsub.spring.service.impl;
 
-import com.kakao.minsub.spring.model.Profile;
 import com.kakao.minsub.spring.repository.ProfileRepository;
 import com.kakao.minsub.spring.sample.CloudConfigs;
 import com.kakao.minsub.spring.service.TestService;
