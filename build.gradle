@@ -90,7 +90,7 @@ dependencies {
 	compile('org.glassfish.jersey.bundles.repackaged:jersey-guava:2.6')
 
 	compile('mysql:mysql-connector-java')
-	compileOnly('org.projectlombok:lombok')
+	compileOnly('org.projectlombok:lombok:1.18.4')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
