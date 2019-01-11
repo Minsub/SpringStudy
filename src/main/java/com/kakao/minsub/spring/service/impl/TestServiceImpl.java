@@ -1,6 +1,5 @@
 package com.kakao.minsub.spring.service.impl;
 
-import com.kakao.minsub.spring.model.Profile;
 import com.kakao.minsub.spring.repository.ProfileRepository;
 import com.kakao.minsub.spring.sample.CloudConfigs;
 import com.kakao.minsub.spring.service.TestService;
@@ -51,7 +50,7 @@ public class TestServiceImpl implements TestService {
 //            System.out.println(query.getResultList());
 
             
-            Profile profile = entityManager.find(Profile.class, 56134);
+//            Profile profile = entityManager.find(Profile.class, 56134);
 //            Profile profile = profileRepository.findOne(56134);
 //            System.out.println(profile);
             
