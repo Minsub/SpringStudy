@@ -1,0 +1,13 @@
+type Profile {
+  id: ID!
+  name: String!
+  searchId: String!
+}
+
+type Query {
+  getProfile(id: ID!): Profile
+}
+
+type Mutation {
+  newProfile(name: String!, searchId: String!) : Profile!
+}

@@ -65,6 +65,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/resources/**")
                 .antMatchers("/swagger-ui/**")
                 .antMatchers("/page/login")
+                .antMatchers("/graphiql")
+                .antMatchers("/graphql")
 //                .anyRequest()
         ;
     }

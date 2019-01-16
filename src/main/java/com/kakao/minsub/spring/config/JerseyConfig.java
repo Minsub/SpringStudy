@@ -19,7 +19,7 @@ public class JerseyConfig extends ResourceConfig {
 
     public JerseyConfig() {
         property(ServletProperties.FILTER_STATIC_CONTENT_REGEX, "/(static|public)/.*");
-        property(ServletProperties.FILTER_FORWARD_ON_404, true);
+//        property(ServletProperties.FILTER_FORWARD_ON_404, true);
         registerEndpoints();
         registerExceptionMappers();
         registerFilters();

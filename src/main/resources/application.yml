@@ -31,6 +31,28 @@ spring:
 #    password: wlalstjq1
 
 
+graphql:
+  servlet:
+    mapping: /graphql
+    enabled: true
+    corsEnabled: true
+
+graphiql:
+    mapping: /graphiql
+    endpoint: /graphql
+    enabled: true
+    pageTitle: GraphiQL
+    cdn:
+        enabled: false
+        version: 0.11.11
+    props:
+        resources:
+            query: query.graphql
+            defaultQuery: defaultQuery.graphql
+            variables: variables.graphql
+        variables:
+            editorTheme: "solarized light"
+
 context:
   listener:
     classes: org.springframework.boot.context.ApplicationPidFileWriter,org.springframework.boot.web.context.WebServerPortFileWriter
