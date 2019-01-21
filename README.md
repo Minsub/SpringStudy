@@ -145,7 +145,7 @@ if (!violations.isEmpty()) {
   cache:
     type: redis
   redis:
-    host: jiminsub.iptime.org
+    host: jiminsub.asuscomm.com
     port: 6379
     password: wlalstjq1
 ```

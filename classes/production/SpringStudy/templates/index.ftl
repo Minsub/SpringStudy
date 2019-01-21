@@ -113,8 +113,8 @@
                 url: url,
                 headers: {
                     "Authorization": "KakaoAK 7d5c93ed984fc4c8d72349b10f2daeca",
-                    "Referer": "http://jiminsub.iptime.org:8080/page/index",
-                    "Origin": "http://jiminsub.iptime.org:8080"
+                    "Referer": "http://jiminsub.asuscomm.com:8080/page/index",
+                    "Origin": "http://jiminsub.asuscomm.com:8080"
                 },
                 success: function( result ) {
                     console.log(result);

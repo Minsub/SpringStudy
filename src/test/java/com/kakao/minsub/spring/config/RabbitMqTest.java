@@ -43,7 +43,7 @@ public class RabbitMqTest {
     @Test
     public void rawProducerTest() throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("jiminsub.iptime.org");
+        factory.setHost("jiminsub.asuscomm.com");
         factory.setUsername("rabbitmq");
         factory.setPassword("wlalstjq1");
         Connection connection = factory.newConnection();
@@ -68,7 +68,7 @@ public class RabbitMqTest {
     @Test
     public void rawConsumerTest() throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("jiminsub.iptime.org");
+        factory.setHost("jiminsub.asuscomm.com");
         factory.setUsername("rabbitmq");
         factory.setPassword("wlalstjq1");
         Connection connection = factory.newConnection();

@@ -44,9 +44,9 @@ public class RestController {
             String url = "https://dapi.kakao.com/v2/local/search/keyword.json?query=" + URLEncoder.encode(query, "UTF-8");
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization", "KakaoAK 5e4d6077b3f89b6ed48397b0c0bce7eb");
-            headers.set("Referer", "http://jiminsub.iptime.org:8080/page/index");
-            headers.set("Origin", "http://jiminsub.iptime.org:8080");
-            headers.setAccessControlAllowOrigin("http://jiminsub.iptime.org:8080");
+            headers.set("Referer", "http://jiminsub.asuscomm.com:8080/page/index");
+            headers.set("Origin", "http://jiminsub.asuscomm.com:8080");
+            headers.setAccessControlAllowOrigin("http://jiminsub.asuscomm.com:8080");
 
             HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
 
