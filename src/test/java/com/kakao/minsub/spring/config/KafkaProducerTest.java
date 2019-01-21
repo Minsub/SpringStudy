@@ -81,7 +81,7 @@ public class KafkaProducerTest extends BaseSpringTest {
     public void multoBrokerProducerTest() throws Exception {
         final Properties props = new Properties();
     
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "jiminsub.iptime.org:9092,jiminsub.iptime.org:9093,jiminsub.iptime.org:9094");
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "jiminsub.asuscomm.com:9092,jiminsub.asuscomm.com:9093,jiminsub.asuscomm.com:9094");
         props.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "gzip");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
@@ -97,7 +97,7 @@ public class KafkaProducerTest extends BaseSpringTest {
     @Test
     public void multiBrokerConsumerTest() {
         final Properties props = new Properties();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "jiminsub.iptime.org:9092,jiminsub.iptime.org:9093,jiminsub.iptime.org:9094");
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "jiminsub.asuscomm.com:9092,jiminsub.asuscomm.com:9093,jiminsub.asuscomm.com:9094");
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "testGroup");
