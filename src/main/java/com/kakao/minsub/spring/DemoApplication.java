@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
 
 @EnableAutoConfiguration
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan({
 		"com.kakao.minsub.spring"
 })
+@EnableCaching
 public class DemoApplication extends SpringBootServletInitializer{
 
 
