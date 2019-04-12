@@ -6,12 +6,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.Future;
 
 @Component
+@ConditionalOnBean({ KafkaProducerClient.class, RabbitTemplate.class })
 public class KafkaListener {
     private Logger logger = LoggerFactory.getLogger(KafkaListener.class);
     

@@ -15,6 +15,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -24,6 +25,7 @@ import java.util.Properties;
 
 @Configuration
 @PropertySource("classpath:common-${spring.profiles.active}.properties")
+@ConditionalOnProperty(prefix = "kafka", value = "enabled", matchIfMissing = true)
 public class KafkaConfig {
     private final Logger logger = LoggerFactory.getLogger(KafkaConfig.class);
     
@@ -36,13 +38,13 @@ public class KafkaConfig {
     @Value("${kafka.topic}")
     private String topic;
     
-    @Value("${kafka.enable}")
-    private boolean enable;
+    @Value("${kafka.enabled}")
+    private boolean enabled;
     
     @Bean
     @Primary
     public Producer<String, String> kafkaProducer() {
-        if (!enable) {
+        if (!enabled) {
             return null;
         }
         final Properties props = new Properties();

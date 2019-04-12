@@ -6,10 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 @Component
+@ConditionalOnBean(name = "rabbitMQObjectMapper")
 public class RabbitMQConsumer {
     private final Logger logger = LoggerFactory.getLogger(RabbitMQConsumer.class);
     private final static String QUEUE_NAME = "queue-test";

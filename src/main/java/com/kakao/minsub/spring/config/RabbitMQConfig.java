@@ -8,11 +8,12 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.kakao.minsub.spring.config.serialize.ProfileSerializer;
 import com.kakao.minsub.spring.model.Profile;
-import lombok.Data;
+import lombok.Setter;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +22,8 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 @PropertySource("classpath:common-${spring.profiles.active}.properties")
 @ConfigurationProperties(prefix = "queue.rabbitmq")
-@Data
+@ConditionalOnProperty(prefix = "queue.rabbitmq", value = "enabled", matchIfMissing = true)
+@Setter
 public class RabbitMQConfig {
     String host;
     String username;
