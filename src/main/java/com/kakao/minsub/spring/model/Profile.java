@@ -3,7 +3,6 @@ package com.kakao.minsub.spring.model;
 import com.kakao.minsub.spring.config.validator.group.First;
 import com.kakao.minsub.spring.config.validator.group.Second;
 import com.kakao.minsub.spring.config.validator.group.Third;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,14 +17,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.List;
 
 
 @Data
 @NoArgsConstructor
 @Entity
 @Table(name = "profiles")
-public class Profile implements Serializable {
+public class Profile extends BaseTimeEntity implements Serializable {
     private static final long serialVersionUID = -1607588153541394505L;
 
     @Id

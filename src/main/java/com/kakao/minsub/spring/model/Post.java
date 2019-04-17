@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "posts")
-public class Post implements Serializable {
+public class Post extends BaseTimeEntity implements Serializable {
     private static final long serialVersionUID = 4143615401615587132L;
 
     @Id
