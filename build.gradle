@@ -110,6 +110,12 @@ def getTagVersion() {
 	return project.findProperty('tagVersion') ?: 'latest'
 }
 
+task print() {
+	doLast {
+		println "github push complete!!"
+	}
+}
+
 // docker login -u user -p password
 // docker pull jiminsub/spring-study
 // docker stop spring-study || true && docker rm spring-study || true
