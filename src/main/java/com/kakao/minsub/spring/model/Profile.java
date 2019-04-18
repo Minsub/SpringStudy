@@ -1,11 +1,11 @@
 package com.kakao.minsub.spring.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.kakao.minsub.spring.config.validator.group.First;
 import com.kakao.minsub.spring.config.validator.group.Second;
 import com.kakao.minsub.spring.config.validator.group.Third;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.validator.constraints.Email;
@@ -19,12 +19,13 @@ import java.io.Serializable;
 import java.util.Collection;
 
 
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @Entity
 @Table(name = "profiles")
 public class Profile extends BaseTimeEntity implements Serializable {
-    private static final long serialVersionUID = -1607588153541394505L;
+    private static final long serialVersionUID = -1607588986171394505L;
 
     @Id
     @GeneratedValue
@@ -45,9 +46,10 @@ public class Profile extends BaseTimeEntity implements Serializable {
     private String searchId;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name="profileId", insertable = false,
-            foreignKey = @ForeignKey(name="none",value = ConstraintMode.NO_CONSTRAINT))
-    @Transient
+    @JoinColumn(
+        name="profileId", insertable = false, foreignKey = @ForeignKey(name="none", value = ConstraintMode.NO_CONSTRAINT)
+    )
+//    @Transient
     private Collection<Post> posts;
     
     @Builder

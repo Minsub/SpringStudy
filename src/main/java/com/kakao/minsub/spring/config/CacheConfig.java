@@ -15,6 +15,9 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.util.Assert;
 
 import java.time.Duration;
@@ -37,18 +40,20 @@ public class CacheConfig extends AbstractCachingConfiguration implements Initial
     public RedisConnectionFactory redisConnectionFactory() {
         LettuceConnectionFactory factory = new LettuceConnectionFactory(host,port);
         factory.setDatabase(database);
-        factory.setPassword(password);
+//      factory.setPassword(password);
 //      factory.setTimeout(timeout);
 //		factory.setShareNativeConnection(false);
         factory.afterPropertiesSet();
         factory.initConnection();
         return factory;
     }
-
+    
     @Bean
-    public RedisTemplate<String, ?> redisTemplate() {
-        RedisTemplate<String, ?> redisTemplate = new RedisTemplate<>();
+    public RedisTemplate<Object, Object> redisTemplate() {
+        RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory());
+        redisTemplate.setValueSerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
         return redisTemplate;
     }
 
@@ -57,6 +62,8 @@ public class CacheConfig extends AbstractCachingConfiguration implements Initial
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
             .computePrefixWith(key -> String.format("spring.cache.%s::", key))
             .entryTtl(defaultExpiration > 0 ? Duration.ofSeconds(defaultExpiration) : Duration.ZERO)
+            .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()))
+            .disableCachingNullValues()
         ;
         return RedisCacheManager.builder(redisConnectionFactory())
                 .cacheDefaults(config)
