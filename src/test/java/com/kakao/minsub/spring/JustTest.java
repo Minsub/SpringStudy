@@ -3,6 +3,9 @@ package com.kakao.minsub.spring;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 /**
@@ -12,9 +15,12 @@ public class JustTest {
     
     @Test
     public void test22() throws Exception {
-        Integer a = null;
+        String s = "12:12:34";
+        LocalTime time = LocalTime.parse(s, DateTimeFormatter.ofPattern("HH:mm:ss"));
     
-        System.out.println(a);
+    
+        System.out.println(LocalTime.now().isAfter(time));
+        System.out.println("\uD83D\uDE80");
     }
     
     

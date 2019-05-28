@@ -115,5 +115,12 @@ public class PostController {
     public User test() {
         return userService.findOne("admin");
     }
+    
+    @POST
+    @Path("/all/test")
+    public Page<Post> showPageableTest() {
+        final Pageable pageable = PageRequest.of(0, 10, new Sort(Sort.Direction.DESC, "id"));
+        return postService.findAll(pageable);
+    }
 
 }

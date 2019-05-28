@@ -33,6 +33,7 @@ public class JerseyConfig extends ResourceConfig {
         register(ProfileController.class);
         register(RestController.class);
         register(TestController.class);
+        register(BusController.class);
         register(UserController.class);
         register(AsyncController.class);
         register(AttachmentController.class);

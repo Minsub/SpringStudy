@@ -3,11 +3,11 @@ package com.kakao.minsub.spring.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.kakao.minsub.spring.model.bot.BotContext;
 import com.kakao.minsub.spring.model.bot.BotQuickReply;
 import com.kakao.minsub.spring.model.bot.BotResponse;
 import com.kakao.minsub.spring.model.bot.BotTemplate;
 import com.kakao.minsub.spring.sample.BeanLifeCycle;
+import com.kakao.minsub.spring.service.MapService;
 import com.kakao.minsub.spring.service.TestService;
 import com.kakao.minsub.spring.type.TestType;
 import io.swagger.annotations.Api;
@@ -23,75 +23,71 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-@Path("/test")
-@Api("Test")
+@Path("/bus")
+@Api("Bus")
 @Produces(MediaType.APPLICATION_JSON)
-public class TestController {
-    private final Logger logger = LoggerFactory.getLogger(TestController.class);
+public class BusController {
+    private final Logger logger = LoggerFactory.getLogger(BusController.class);
     
     @Autowired
-    private TestService testService;
-    
-    @Autowired
-    private BeanLifeCycle beanLifeCycle;
-    
-    @GET
-    @Path("/jpa")
-    public Map jpa() {
-        testService.testJPA();
-        return Collections.emptyMap();
-    }
-    
-    @GET
-    @Path("/version")
-    public Map version() {
-        Map<String, Object> result = Maps.newHashMap();
-        result.put("version", 1);
-    
-        beanLifeCycle.print();
-        
-        return result;
-    }
-    
-    @GET
-    @Path("/empty")
-    public void empty() {
-    
-    }
-    
-    @GET
-    @Path("/gracefull")
-    public void gracefull() throws Exception {
-        logger.info("START graceful test");
-    
-        TimeUnit.SECONDS.sleep(5);
-        
-        logger.info("END graceful test");
-    }
-    
-    @GET
-    @Path("/pathparm/{type}")
-    public void gracefull(@PathParam("type") TestType type) throws Exception {
-        logger.info("type: {}", type);
-    }
-    
-    @GET
-    @Path("/greeting")
-    public String greeting() throws Exception {
-        return testService.getGreeting();
-    }
-    
+    private MapService mapService;
     
     @POST
-    @Path("/webhook")
-    public void webhook(Map<String, Object> body) throws Exception {
-        logger.info(body == null ? "NULL!!!" : new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(body));
+    @Path("/register/{type}")
+    public BotResponse register(@PathParam("type") String type, Map<String, Object> body) throws Exception {
+        logger.info(new ObjectMapper().writeValueAsString(body));
+        
+        Map<String, Object> output = mapService.register(type, body);
+        return BotResponse.builder()
+                .version("2.0")
+                .template(BotTemplate.builder().outputs(Lists.newArrayList(output)).build())
+                .build();
     }
+    
+    @POST
+    @Path("/alarms")
+    public BotResponse alarms(Map<String, Object> body) throws Exception {
+        logger.info(new ObjectMapper().writeValueAsString(body));
+        
+        Map<String, Object> output = mapService.alarmList();
+        return BotResponse.builder()
+                .version("2.0")
+                .template(BotTemplate.builder().outputs(Lists.newArrayList(output)).build())
+                .build();
+    }
+    
+    @POST
+    @Path("/now")
+    public BotResponse now(Map<String, Object> body) throws Exception {
+        logger.info(new ObjectMapper().writeValueAsString(body));
+        
+        Map<String, Object> output = mapService.now(body);
+        List<BotQuickReply> quickReplies = Lists.newArrayList(new BotQuickReply("바로등록 5분"), new BotQuickReply("바로등록 7분"), new BotQuickReply("바로등록 10분"), new BotQuickReply("바로등록 15분"));
+        return BotResponse.builder()
+                .version("2.0")
+                .template(BotTemplate.builder().outputs(Lists.newArrayList(output)).quickReplies(quickReplies).build())
+                .build();
+    }
+    
+    @POST
+    @Path("/register/quick")
+    public BotResponse registerQuick(Map<String, Object> body) throws Exception {
+        logger.info(new ObjectMapper().writeValueAsString(body));
+    
+        Map<String, Object> output = mapService.registerQuick(body);
+        return BotResponse.builder()
+                .version("2.0")
+                .template(BotTemplate.builder().outputs(Lists.newArrayList(output)).build())
+                .build();
+    }
+    
+    
+    
     
     @POST
     @Path("/bot")
     public BotResponse bot(Map<String, Object> body) throws Exception {
-        logger.info(body.toString());
+        logger.info(new ObjectMapper().writeValueAsString(body));
         
         Map<String, Object> output = Maps.newHashMap();
         Map<String, Object> outputBody = Maps.newHashMap();
@@ -107,7 +103,7 @@ public class TestController {
     @POST
     @Path("/bot/replies")
     public BotResponse botWithReplies(Map<String, Object> body) throws Exception {
-        logger.info(body.toString());
+        logger.info(new ObjectMapper().writeValueAsString(body));
         
         Map<String, Object> output = Maps.newHashMap();
         Map<String, Object> outputBody = Maps.newHashMap();
@@ -125,7 +121,7 @@ public class TestController {
     @POST
     @Path("/bot/check")
     public Map check(Map<String, Object> body) throws Exception {
-        logger.info(body.toString());
+        logger.info(new ObjectMapper().writeValueAsString(body));
         
         Map<String, Object> map = Maps.newHashMap();
         map.put("status", "SUCCESS");
