@@ -1,6 +1,10 @@
 package com.kakao.minsub.spring.service.impl;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.kakao.minsub.spring.model.bot.template.BasicCard;
+import com.kakao.minsub.spring.model.bot.template.Button;
+import com.kakao.minsub.spring.model.bot.template.Thumbnail;
 import com.kakao.minsub.spring.model.bus.BusAlram;
 import com.kakao.minsub.spring.model.bus.KakaoMapBusLine;
 import com.kakao.minsub.spring.model.bus.KakaoMapBusStopResponse;
@@ -55,7 +59,7 @@ public class MapServiceImpl implements MapService {
                                 String typeName = type.equals("gowork") ? "출근" : "퇴근";
                                 StringBuilder sb = new StringBuilder();
                                 sb.append(String.format("\uD83D\uDE80%s 버스(%s번)가 곧 도착합니다.\n", typeName, busAlram.getBusNumber()));
-                                sb.append(generateBusArrivalInfo(busAlram.getBusStopId(), busLine));
+                                sb.append(generateBusArrivalInfo(busAlram.getBusStopId(), busLine, true)+"\n");
                                 this.sendMessage(sb.toString());
                             } catch(Exception e) {
                                 logger.error("error in batch", e);
@@ -126,9 +130,14 @@ public class MapServiceImpl implements MapService {
                     .filter(line -> line.name.equals(BUS_NUMBER))
                     .findFirst().get();
     
-            String message = String.format("\uD83D\uDE80%s 버스(%s번) 도착시간 현재정보!\n", typeName, BUS_NUMBER)
-                    + this.generateBusArrivalInfo(busStopId, busLine);
-            return createSimpleText(message);
+//            String message = String.format("\uD83D\uDE80%s 버스(%s번) 도착시간 현재정보!\n", typeName, BUS_NUMBER)
+//                    + this.generateBusArrivalInfo(busStopId, busLine);
+//            return createSimpleText(message);
+
+            String title = String.format("\uD83D\uDE80%s 버스(%s번) 도착시간", typeName, BUS_NUMBER);
+            String desc = this.generateBusArrivalInfo(busStopId, busLine, false);
+            String imageUrl = String.format("http://map3.daum.net/staticmap/og?type=place&srs=wcongnamul&size=400x200&m=%s,%s", busStopInfo.x, busStopInfo.y);
+            return createSimpleBasicCard(title, desc, imageUrl,"카카오맵으로보기", "https://m.map.kakao.com/actions/busStationInfo?busStopId="+busStopId);
         } catch (Exception e) {
             logger.error("error in now", e);
             return createSimpleText("오류가 발생했습니다.");
@@ -200,18 +209,37 @@ public class MapServiceImpl implements MapService {
         return output;
     }
     
-    private String generateBusArrivalInfo(String busStopId, KakaoMapBusLine busLine) {
+    private Map createSimpleBasicCard(String title, String description, String imageUrl, String buttonLabel, String buttonLink) {
+        Map<String, Object> output = Maps.newHashMap();
+        BasicCard basicCard = new BasicCard();
+        basicCard.title = title;
+        basicCard.description = description;
+        if (StringUtils.isNotEmpty(imageUrl)) {
+            basicCard.thumbnail = Thumbnail.builder().imageUrl(imageUrl).build();
+        }
+        Button button = new Button();
+        button.action = "webLink";
+        button.label = buttonLabel;
+        button.webLinkUrl = buttonLink;
+        basicCard.buttons = Lists.newArrayList(button);
+        output.put("basicCard", basicCard);
+        return output;
+    }
+    
+    private String generateBusArrivalInfo(String busStopId, KakaoMapBusLine busLine, boolean containLink) {
         int arrivalTime1 = busLine.arrival.arrivalTime / 60;
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("(기준시간: %s)\n", LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))));
         sb.append(String.format(" 1st 버스: %s (%s개 남음)\n", getArrivalTimeText(arrivalTime1), busLine.arrival.busStopCount));
         if (busLine.arrival.arrivalTime2 > 0) {
             int arrival2 = busLine.arrival.arrivalTime2 / 60;
-            sb.append(String.format(" 2nd 버스: %s (%s개 남음)\n", getArrivalTimeText(arrival2), busLine.arrival.busStopCount2));
+            sb.append(String.format(" 2nd 버스: %s (%s개 남음)", getArrivalTimeText(arrival2), busLine.arrival.busStopCount2));
         } else {
-            sb.append(" 2nd 버스: 정보없음\n");
+            sb.append(" 2nd 버스: 정보없음");
         }
-        sb.append("https://m.map.kakao.com/actions/busStationInfo?busStopId="+busStopId);
+        if (containLink) {
+            sb.append("\nhttps://m.map.kakao.com/actions/busStationInfo?busStopId="+busStopId);
+        }
         return sb.toString();
     }
     

@@ -6,6 +6,8 @@ import com.google.common.collect.Maps;
 import com.kakao.minsub.spring.model.bot.BotQuickReply;
 import com.kakao.minsub.spring.model.bot.BotResponse;
 import com.kakao.minsub.spring.model.bot.BotTemplate;
+import com.kakao.minsub.spring.model.bot.template.BasicCard;
+import com.kakao.minsub.spring.model.bot.template.Button;
 import com.kakao.minsub.spring.sample.BeanLifeCycle;
 import com.kakao.minsub.spring.service.MapService;
 import com.kakao.minsub.spring.service.TestService;
@@ -75,6 +77,28 @@ public class BusController {
         logger.info(new ObjectMapper().writeValueAsString(body));
     
         Map<String, Object> output = mapService.registerQuick(body);
+        return BotResponse.builder()
+                .version("2.0")
+                .template(BotTemplate.builder().outputs(Lists.newArrayList(output)).build())
+                .build();
+    }
+    
+    @POST
+    @Path("/now/test")
+    public BotResponse tttttttt(Map<String, Object> body) throws Exception {
+        logger.info(new ObjectMapper().writeValueAsString(body));
+        
+        Map<String, Object> output = Maps.newHashMap();
+        BasicCard basicCard = new BasicCard();
+        basicCard.title = "제목입니다.";
+        basicCard.description = "설명입니다.";
+        Button button = new Button();
+        button.action = "webLink";
+        button.label = "자세히";
+        button.webLinkUrl = "http://www.daum.net";
+        basicCard.buttons = Lists.newArrayList(button);
+        output.put("basicCard", basicCard);
+        
         return BotResponse.builder()
                 .version("2.0")
                 .template(BotTemplate.builder().outputs(Lists.newArrayList(output)).build())
